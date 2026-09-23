@@ -4,29 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INS Practicals</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg: #0a0a0f;
             --surface: #12121a;
-            --surface-hover: #1a1a25;
             --border: #2a2a3a;
             --text: #e4e4ef;
             --text-muted: #8888a0;
             --accent: #e04040;
             --accent-glow: rgba(224, 64, 64, 0.3);
             --green: #4ade80;
-            --orange: #fb923c;
-            --pink: #f472b6;
             --cyan: #22d3ee;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -63,7 +57,7 @@
         .header h1 {
             font-size: 2.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--orange), var(--cyan));
+            background: linear-gradient(135deg, var(--accent), #fb923c, var(--cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -74,12 +68,6 @@
         .header p {
             color: var(--text-muted);
             font-size: 1.1rem;
-        }
-
-        .header .sub-info {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
         }
 
         .badge {
@@ -123,10 +111,7 @@
             transition: all 0.2s;
         }
 
-        .nav a:hover {
-            background: var(--accent);
-            color: white;
-        }
+        .nav a:hover { background: var(--accent); color: white; }
 
         .practical { margin-bottom: 3rem; }
 
@@ -147,11 +132,7 @@
             white-space: nowrap;
         }
 
-        .practical-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-        }
+        .practical-header h2 { font-size: 1.5rem; font-weight: 700; }
 
         .sub-practical {
             background: var(--surface);
@@ -167,7 +148,6 @@
         .sub-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 1rem 1.25rem;
             border-bottom: 1px solid var(--border);
             background: rgba(224, 64, 64, 0.03);
@@ -176,7 +156,6 @@
         .sub-header h3 {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--text);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -190,9 +169,6 @@
             border-radius: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        .tag-c {
             background: rgba(34, 211, 238, 0.12);
             color: var(--cyan);
         }
@@ -211,13 +187,12 @@
             cursor: pointer;
             font-size: 0.78rem;
             font-weight: 600;
-            font-family: 'Inter', sans-serif;
+            font-family: inherit;
             display: flex;
             align-items: center;
             gap: 0.4rem;
             transition: all 0.25s;
             z-index: 10;
-            backdrop-filter: blur(8px);
         }
 
         .copy-btn:hover {
@@ -235,25 +210,33 @@
 
         .copy-btn svg { width: 14px; height: 14px; }
 
-        pre[class*="language-"] {
-            margin: 0 !important;
-            border-radius: 0 !important;
-            padding: 1.5rem 1.25rem !important;
-            background: #0d0d14 !important;
-            font-size: 0.83rem !important;
-            line-height: 1.65 !important;
+        pre {
+            margin: 0;
+            padding: 1.5rem 1.25rem;
+            background: #0d0d14;
             overflow-x: auto;
         }
 
-        code[class*="language-"] {
-            font-family: 'JetBrains Mono', monospace !important;
-            font-size: 0.8rem !important;
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.82rem;
+            line-height: 1.65;
+            color: #ccc;
+            white-space: pre;
+            tab-size: 4;
         }
+
+        .kw { color: #c678dd; }
+        .fn { color: #61afef; }
+        .str { color: #98c379; }
+        .cm { color: #5c6370; font-style: italic; }
+        .pp { color: #e06c75; }
+        .num { color: #d19a66; }
+        .type { color: #e5c07b; }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
         .footer {
             text-align: center;
@@ -267,7 +250,7 @@
         @media (max-width: 640px) {
             .header h1 { font-size: 2rem; }
             .practical-header h2 { font-size: 1.2rem; }
-            pre[class*="language-"] { font-size: 0.72rem !important; }
+            code { font-size: 0.72rem; }
             .nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; }
         }
     </style>
@@ -276,16 +259,13 @@
 
 <div class="container">
 
-    <!-- Header -->
     <div class="header">
         <h1>INS Practicals</h1>
         <p>Information &amp; Network Security — Lab Programs</p>
-        <p class="sub-info">BTCO13501 &bull; Enrollment No: ET24BTCO156 &bull; Prey Goti</p>
         <span class="badge">🔐 C Programs</span>
         <span class="badge badge-secondary">7 Practicals</span>
     </div>
 
-    <!-- Navigation -->
     <nav class="nav">
         <a href="#p1">P1 · Caesar</a>
         <a href="#p2">P2 · Monoalphabetic</a>
@@ -296,2110 +276,636 @@
         <a href="#p7">P7 · Rail Fence</a>
     </nav>
 
-    <!-- ==================== PRACTICAL 1 ==================== -->
+    <!-- PRACTICAL 1 -->
     <section class="practical" id="p1">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 1</span>
             <h2>Caesar Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 1: Caesar Cipher — Encrypt &amp; Decrypt with Key Shift
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 1: Caesar Cipher — Encrypt &amp; Decrypt with Key Shift</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;conio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;ctype.h&gt;
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;conio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;stdlib.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    int choice, key;
-    int ch;
-    FILE *fin, *fout;
-    printf("\n1) Encrypt (plain text ---&gt; cipher text)");
-    printf("\n2) Decrypt (cipher text ---&gt; plain text)");
-    printf("\n3) exit");
-    printf("\nselect your choice :");
-    scanf("%d", &amp;choice);
-    printf("enter your key(1-25) :");
-    scanf("%d", &amp;key);
-    if (choice == 1)
+    <span class="type">int</span> choice, key;
+    <span class="type">int</span> ch;
+    <span class="type">FILE</span> *fin, *fout;
+    <span class="fn">printf</span>(<span class="str">"\n1) Encrypt (plain text ---&gt; cipher text)"</span>);
+    <span class="fn">printf</span>(<span class="str">"\n2) Decrypt (cipher text ---&gt; plain text)"</span>);
+    <span class="fn">printf</span>(<span class="str">"\n3) exit"</span>);
+    <span class="fn">printf</span>(<span class="str">"\nselect your choice :"</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice);
+    <span class="fn">printf</span>(<span class="str">"enter your key(1-25) :"</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;key);
+    <span class="kw">if</span> (choice == <span class="num">1</span>)
     {
-        fin = fopen("input.txt", "r");
-        fout = fopen("inout.txt", "w");
-        if (fin == NULL)
+        fin = <span class="fn">fopen</span>(<span class="str">"input.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"inout.txt"</span>, <span class="str">"w"</span>);
+        <span class="kw">if</span> (fin == NULL)
         {
-            printf("file is empty");
-            return 0;
+            <span class="fn">printf</span>(<span class="str">"file is empty"</span>);
+            <span class="kw">return</span> <span class="num">0</span>;
         }
-        while ((ch = fgetc(fin)) != EOF)
+        <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
-            char base;
-            if (isalpha(ch))
+            <span class="type">char</span> base;
+            <span class="kw">if</span> (<span class="fn">isalpha</span>(ch))
             {
-                if (isupper(ch))
-                {
-                    base = 'A';
-                }
-                else
-                {
-                    base = 'a';
-                }
-                int n = ch - base;
-                n = (n + key) % 26;
+                <span class="kw">if</span> (<span class="fn">isupper</span>(ch))
+                    base = <span class="str">'A'</span>;
+                <span class="kw">else</span>
+                    base = <span class="str">'a'</span>;
+                <span class="type">int</span> n = ch - base;
+                n = (n + key) % <span class="num">26</span>;
                 ch = n + base;
             }
-            fputc(ch, fout);
+            <span class="fn">fputc</span>(ch, fout);
         }
-        fclose(fin);
-        fclose(fout);
-        printf("done!!!!!!!!!!!!!!!!!!!!");
+        <span class="fn">fclose</span>(fin);
+        <span class="fn">fclose</span>(fout);
+        <span class="fn">printf</span>(<span class="str">"done!!!!!!!!!!!!!!!!!!!!"</span>);
     }
-    else if (choice == 2)
+    <span class="kw">else if</span> (choice == <span class="num">2</span>)
     {
-        fin = fopen("input.txt", "r");
-        fout = fopen("inout.txt", "w");
-        if (fin == NULL)
+        fin = <span class="fn">fopen</span>(<span class="str">"input.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"inout.txt"</span>, <span class="str">"w"</span>);
+        <span class="kw">if</span> (fin == NULL)
         {
-            printf("file is empty");
-            return 0;
+            <span class="fn">printf</span>(<span class="str">"file is empty"</span>);
+            <span class="kw">return</span> <span class="num">0</span>;
         }
-        while ((ch = fgetc(fin)) != EOF)
+        <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
-            char base;
-            if (isalpha(ch))
+            <span class="type">char</span> base;
+            <span class="kw">if</span> (<span class="fn">isalpha</span>(ch))
             {
-                if (isupper(ch))
-                {
-                    base = 'A';
-                }
-                else
-                {
-                    base = 'a';
-                }
-                int n = ch - base;
-                n = (n - key + 26) % 26;
+                <span class="kw">if</span> (<span class="fn">isupper</span>(ch))
+                    base = <span class="str">'A'</span>;
+                <span class="kw">else</span>
+                    base = <span class="str">'a'</span>;
+                <span class="type">int</span> n = ch - base;
+                n = (n - key + <span class="num">26</span>) % <span class="num">26</span>;
                 ch = n + base;
             }
-            fputc(ch, fout);
+            <span class="fn">fputc</span>(ch, fout);
         }
-        fclose(fin);
-        fclose(fout);
-        printf("done!!!!!!!!!!!!!!!!!!!!");
+        <span class="fn">fclose</span>(fin);
+        <span class="fn">fclose</span>(fout);
+        <span class="fn">printf</span>(<span class="str">"done!!!!!!!!!!!!!!!!!!!!"</span>);
     }
-    else
+    <span class="kw">else</span>
     {
-        printf("please select proper choice ");
+        <span class="fn">printf</span>(<span class="str">"please select proper choice "</span>);
     }
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 2 ==================== -->
+    <!-- PRACTICAL 2 -->
     <section class="practical" id="p2">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 2</span>
             <h2>Monoalphabetic Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 2: Monoalphabetic Cipher — Substitution with Key Mapping
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 2: Monoalphabetic Cipher — Substitution with Key Mapping</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;conio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;ctype.h&gt;
-#include &lt;string.h&gt;
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;conio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;stdlib.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
 
-const char ALPHABET[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-const char KEY[] = {'M', 'U', 'A', 'L', 'V', 'O', 'Z', 'K', 'R', 'N', 'J', 'X', 'Q', 'D', 'F', 'S', 'H', 'P', 'E', 'B',
-'C', 'T', 'I', 'W', 'Y', 'G'};
-int main()
+<span class="kw">const</span> <span class="type">char</span> ALPHABET[] = {<span class="str">'A'</span>, <span class="str">'B'</span>, <span class="str">'C'</span>, <span class="str">'D'</span>, <span class="str">'E'</span>, <span class="str">'F'</span>, <span class="str">'G'</span>, <span class="str">'H'</span>, <span class="str">'I'</span>, <span class="str">'J'</span>, <span class="str">'K'</span>, <span class="str">'L'</span>, <span class="str">'M'</span>, <span class="str">'N'</span>, <span class="str">'O'</span>, <span class="str">'P'</span>, <span class="str">'Q'</span>, <span class="str">'R'</span>,
+<span class="str">'S'</span>, <span class="str">'T'</span>, <span class="str">'U'</span>, <span class="str">'V'</span>, <span class="str">'W'</span>, <span class="str">'X'</span>, <span class="str">'Y'</span>, <span class="str">'Z'</span>};
+<span class="kw">const</span> <span class="type">char</span> KEY[] = {<span class="str">'M'</span>, <span class="str">'U'</span>, <span class="str">'A'</span>, <span class="str">'L'</span>, <span class="str">'V'</span>, <span class="str">'O'</span>, <span class="str">'Z'</span>, <span class="str">'K'</span>, <span class="str">'R'</span>, <span class="str">'N'</span>, <span class="str">'J'</span>, <span class="str">'X'</span>, <span class="str">'Q'</span>, <span class="str">'D'</span>, <span class="str">'F'</span>, <span class="str">'S'</span>, <span class="str">'H'</span>, <span class="str">'P'</span>, <span class="str">'E'</span>, <span class="str">'B'</span>,
+<span class="str">'C'</span>, <span class="str">'T'</span>, <span class="str">'I'</span>, <span class="str">'W'</span>, <span class="str">'Y'</span>, <span class="str">'G'</span>};
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    int choice;
-    int ch;
-    FILE *fin, *fout;
-    printf("\n1) Encrypt");
-    printf("\n2) Decrypt");
-    printf("\n3) Exit");
-    printf("\n select any that you want to perform on your text :");
-    scanf("%d", &amp;choice);
-    if (choice == 1)
+    <span class="type">int</span> choice;
+    <span class="type">int</span> ch;
+    <span class="type">FILE</span> *fin, *fout;
+    <span class="fn">printf</span>(<span class="str">"\n1) Encrypt"</span>);
+    <span class="fn">printf</span>(<span class="str">"\n2) Decrypt"</span>);
+    <span class="fn">printf</span>(<span class="str">"\n3) Exit"</span>);
+    <span class="fn">printf</span>(<span class="str">"\n select any that you want to perform on your text :"</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice);
+    <span class="kw">if</span> (choice == <span class="num">1</span>)
     {
-        fin = fopen("D:\\ET24BTCO156\\mono.txt", "r");
-        fout = fopen("D:\\ET24BTCO156\\mono_output.txt", "w");
-        if (fin == NULL)
+        fin = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_output.txt"</span>, <span class="str">"w"</span>);
+        <span class="kw">if</span> (fin == NULL) { <span class="fn">printf</span>(<span class="str">"File is empty !!!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+        <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
-            printf("File is empty !!!");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            if (isalpha(ch))
+            <span class="kw">if</span> (<span class="fn">isalpha</span>(ch))
             {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int i = 0; i &lt; 26; i++)
-                {
-                    if (ALPHABET[i] == is_uper)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                char cipher_text = KEY[index];
-                if (is_lower)
-                {
-                    ch = tolower(cipher_text);
-                }
-                else
-                {
-                    ch = cipher_text;
-                }
+                <span class="type">int</span> is_lower = <span class="fn">islower</span>(ch);
+                <span class="type">char</span> is_uper = <span class="fn">toupper</span>(ch);
+                <span class="type">int</span> index = <span class="num">0</span>;
+                <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">26</span>; i++)
+                { <span class="kw">if</span> (ALPHABET[i] == is_uper) { index = i; <span class="kw">break</span>; } }
+                <span class="type">char</span> cipher_text = KEY[index];
+                <span class="kw">if</span> (is_lower) ch = <span class="fn">tolower</span>(cipher_text);
+                <span class="kw">else</span> ch = cipher_text;
             }
-            fputc(ch, fout);
+            <span class="fn">fputc</span>(ch, fout);
         }
-        fclose(fin);
-        fclose(fout);
-        printf("Encryption done! Check mono_output.txt");
+        <span class="fn">fclose</span>(fin); <span class="fn">fclose</span>(fout);
+        <span class="fn">printf</span>(<span class="str">"Encryption done! Check mono_output.txt"</span>);
     }
-    else if (choice == 2)
+    <span class="kw">else if</span> (choice == <span class="num">2</span>)
     {
-        fin = fopen("D:\\ET24BTCO156\\mono_output.txt", "r");
-        fout = fopen("D:\\ET24BTCO156\\mono_dec.txt", "w");
-        if (fin == NULL)
+        fin = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_output.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_dec.txt"</span>, <span class="str">"w"</span>);
+        <span class="kw">if</span> (fin == NULL) { <span class="fn">printf</span>(<span class="str">"File is empty !!!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+        <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
-            printf("File is empty !!!");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            if (isalpha(ch))
+            <span class="kw">if</span> (<span class="fn">isalpha</span>(ch))
             {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int i = 0; i &lt; 26; i++)
-                {
-                    if (KEY[i] == is_uper)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                char cipher_text = ALPHABET[index];
-                if (is_lower)
-                {
-                    ch = tolower(cipher_text);
-                }
-                else
-                {
-                    ch = cipher_text;
-                }
+                <span class="type">int</span> is_lower = <span class="fn">islower</span>(ch);
+                <span class="type">char</span> is_uper = <span class="fn">toupper</span>(ch);
+                <span class="type">int</span> index = <span class="num">0</span>;
+                <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">26</span>; i++)
+                { <span class="kw">if</span> (KEY[i] == is_uper) { index = i; <span class="kw">break</span>; } }
+                <span class="type">char</span> cipher_text = ALPHABET[index];
+                <span class="kw">if</span> (is_lower) ch = <span class="fn">tolower</span>(cipher_text);
+                <span class="kw">else</span> ch = cipher_text;
             }
-            fputc(ch, fout);
+            <span class="fn">fputc</span>(ch, fout);
         }
-        fclose(fin);
-        fclose(fout);
-        printf("Decryption done! Check mono_output.txt");
+        <span class="fn">fclose</span>(fin); <span class="fn">fclose</span>(fout);
+        <span class="fn">printf</span>(<span class="str">"Decryption done! Check mono_output.txt"</span>);
     }
-    else if (choice == 3)
-    {
-        printf("\nyou are exiting....");
-    }
-    else
-    {
-        printf("\nplease select proper option ");
-    }
+    <span class="kw">else if</span> (choice == <span class="num">3</span>) { <span class="fn">printf</span>(<span class="str">"\nyou are exiting...."</span>); }
+    <span class="kw">else</span> { <span class="fn">printf</span>(<span class="str">"\nplease select proper option "</span>); }
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 3 ==================== -->
+    <!-- PRACTICAL 3 -->
     <section class="practical" id="p3">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 3</span>
             <h2>Playfair Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 3: Playfair Cipher — 5×5 Matrix Cipher
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 3: Playfair Cipher — 5×5 Matrix Cipher</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;ctype.h&gt;
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    char key[100], text[500];
-    char matrix[5][5];
-    int used[26] = {0};
-    int i, j, k = 0;
-    printf("Enter Key: ");
-    scanf("%s", key);
-    used['J' - 'A'] = 1;
-    // Generate Matrix
-    for (i = 0; key[i] != '\0'; i++)
+    <span class="type">char</span> key[<span class="num">100</span>], text[<span class="num">500</span>];
+    <span class="type">char</span> matrix[<span class="num">5</span>][<span class="num">5</span>];
+    <span class="type">int</span> used[<span class="num">26</span>] = {<span class="num">0</span>};
+    <span class="type">int</span> i, j, k = <span class="num">0</span>;
+    <span class="fn">printf</span>(<span class="str">"Enter Key: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%s"</span>, key);
+    used[<span class="str">'J'</span> - <span class="str">'A'</span>] = <span class="num">1</span>;
+    <span class="cm">// Generate Matrix</span>
+    <span class="kw">for</span> (i = <span class="num">0</span>; key[i] != <span class="str">'\0'</span>; i++)
     {
-        char ch = toupper(key[i]);
-        if (ch == 'J')
-            ch = 'T';
-        if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z')
-        {
-        }
-        if (used[ch - 'A'] == 0)
-        {
-        }
-        matrix[k / 5][k % 5] = ch;
-        used[ch - 'A'] = 1;
+        <span class="type">char</span> ch = <span class="fn">toupper</span>(key[i]);
+        <span class="kw">if</span> (ch == <span class="str">'J'</span>) ch = <span class="str">'T'</span>;
+        <span class="kw">if</span> (ch &gt;= <span class="str">'A'</span> &amp;&amp; ch &lt;= <span class="str">'Z'</span>) { }
+        <span class="kw">if</span> (used[ch - <span class="str">'A'</span>] == <span class="num">0</span>) { }
+        matrix[k / <span class="num">5</span>][k % <span class="num">5</span>] = ch;
+        used[ch - <span class="str">'A'</span>] = <span class="num">1</span>;
         k++;
     }
-    for (i = 0; i &lt; 26; i++)
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; <span class="num">26</span>; i++)
     {
-        if (used[i] == 0)
-        {
-            matrix[k / 5][k % 5] = i + 'A';
-            k++;
-        }
+        <span class="kw">if</span> (used[i] == <span class="num">0</span>) { matrix[k/<span class="num">5</span>][k%<span class="num">5</span>] = i + <span class="str">'A'</span>; k++; }
     }
-    printf("\nKey Matrix\n\n");
-    for (i = 0; i &lt; 5; i++)
+    <span class="fn">printf</span>(<span class="str">"\nKey Matrix\n\n"</span>);
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++)
     {
-        for (j = 0; j &lt; 5; j++)
-        {
-            printf("%c", matrix[i][j]);
-        }
-        printf("\n");
+        <span class="kw">for</span> (j = <span class="num">0</span>; j &lt; <span class="num">5</span>; j++) <span class="fn">printf</span>(<span class="str">"%c"</span>, matrix[i][j]);
+        <span class="fn">printf</span>(<span class="str">"\n"</span>);
     }
-    FILE *fp, *fe, *fd;
-    fp = fopen("file1.txt", "r");
-    if (fp == NULL)
+    <span class="type">FILE</span> *fp, *fe, *fd;
+    fp = <span class="fn">fopen</span>(<span class="str">"file1.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (fp == NULL) { <span class="fn">printf</span>(<span class="str">"File not found"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+    <span class="fn">fgets</span>(text, <span class="num">500</span>, fp); <span class="fn">fclose</span>(fp);
+    <span class="type">char</span> plain[<span class="num">500</span>]; <span class="type">int</span> p = <span class="num">0</span>;
+    <span class="kw">for</span> (i = <span class="num">0</span>; text[i] != <span class="str">'\0'</span>; i++)
     {
-        printf("File not found");
-        return 0;
+        <span class="kw">if</span> (<span class="fn">isalpha</span>(text[i]))
+        { plain[p] = <span class="fn">toupper</span>(text[i]); <span class="kw">if</span> (plain[p]==<span class="str">'J'</span>) plain[p]=<span class="str">'T'</span>; p++; }
     }
-    fgets(text, 500, fp);
-    fclose(fp);
-    char plain[500];
-    int p = 0;
-    for (i = 0; text[i] != '\0'; i++)
-    {
-        if (isalpha(text[i]))
-        {
-            plain[p] = toupper(text[i]);
-            if (plain[p] == 'J')
-                plain[p] = 'T';
-            p++;
-        }
-    }
-    plain[p] = '\0';
-    char final[500];
-    int f = 0;
-    for (i = 0; i &lt; p; i++)
+    plain[p] = <span class="str">'\0'</span>;
+    <span class="type">char</span> final[<span class="num">500</span>]; <span class="type">int</span> f = <span class="num">0</span>;
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; p; i++)
     {
         final[f++] = plain[i];
-        if (i &lt; p - 1 &amp;&amp; plain[i] == plain[i + 1])
-            final[f++] = 'X';
+        <span class="kw">if</span> (i &lt; p-<span class="num">1</span> &amp;&amp; plain[i] == plain[i+<span class="num">1</span>]) final[f++] = <span class="str">'X'</span>;
     }
-    if (f % 2 != 0)
-        final[f++] = 'X';
-    final[f] = '\0';
-    printf("\nPlain Text: %s\n", final);
-    // Encryption
-    fe = fopen("file2.txt", "w");
-    char cipher[500];
-    int c = 0;
-    for (i = 0; i &lt; f; i += 2)
+    <span class="kw">if</span> (f % <span class="num">2</span> != <span class="num">0</span>) final[f++] = <span class="str">'X'</span>;
+    final[f] = <span class="str">'\0'</span>;
+    <span class="fn">printf</span>(<span class="str">"\nPlain Text: %s\n"</span>, final);
+    <span class="cm">// Encryption</span>
+    fe = <span class="fn">fopen</span>(<span class="str">"file2.txt"</span>, <span class="str">"w"</span>);
+    <span class="type">char</span> cipher[<span class="num">500</span>]; <span class="type">int</span> c = <span class="num">0</span>;
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; f; i += <span class="num">2</span>)
     {
-        char a = final[i];
-        char b = final[i + 1];
-        int r1, c1, r2, c2;
-        for (int x = 0; x &lt; 5; x++)
-        {
-            for (int y = 0; y &lt; 5; y++)
-            {
-                if (matrix[x][y] == a)
-                {
-                    r1 = x;
-                    c1 = y;
-                }
-                if (matrix[x][y] == b)
-                {
-                    r2 = x;
-                    c2 = y;
-                }
-            }
-        }
-        if (r1 == r2)
-        {
-            cipher[c++] = matrix[r1][(c1 + 1) % 5];
-            cipher[c++] = matrix[r2][(c2 + 1) % 5];
-        }
-        else if (c1 == c2)
-        {
-            cipher[c++] = matrix[(r1 + 1) % 5][c1];
-            cipher[c++] = matrix[(r2 + 1) % 5][c2];
-        }
-        else
-        {
-            cipher[c++] = matrix[r1][c2];
-            cipher[c++] = matrix[r2][c1];
-        }
+        <span class="type">char</span> a = final[i], b = final[i+<span class="num">1</span>];
+        <span class="type">int</span> r1, c1, r2, c2;
+        <span class="kw">for</span> (<span class="type">int</span> x=<span class="num">0</span>; x&lt;<span class="num">5</span>; x++)
+          <span class="kw">for</span> (<span class="type">int</span> y=<span class="num">0</span>; y&lt;<span class="num">5</span>; y++)
+          { <span class="kw">if</span>(matrix[x][y]==a){r1=x;c1=y;} <span class="kw">if</span>(matrix[x][y]==b){r2=x;c2=y;} }
+        <span class="kw">if</span> (r1==r2) { cipher[c++]=matrix[r1][(c1+<span class="num">1</span>)%<span class="num">5</span>]; cipher[c++]=matrix[r2][(c2+<span class="num">1</span>)%<span class="num">5</span>]; }
+        <span class="kw">else if</span> (c1==c2) { cipher[c++]=matrix[(r1+<span class="num">1</span>)%<span class="num">5</span>][c1]; cipher[c++]=matrix[(r2+<span class="num">1</span>)%<span class="num">5</span>][c2]; }
+        <span class="kw">else</span> { cipher[c++]=matrix[r1][c2]; cipher[c++]=matrix[r2][c1]; }
     }
-    cipher[c] = '\0';
-    fprintf(fe, "%s", cipher);
-    fclose(fe);
-    printf("Cipher Text: %s\n", cipher);
-    // Decryption
-    fe = fopen("file2.txt", "r");
-    if (fe == NULL)
+    cipher[c] = <span class="str">'\0'</span>;
+    <span class="fn">fprintf</span>(fe, <span class="str">"%s"</span>, cipher); <span class="fn">fclose</span>(fe);
+    <span class="fn">printf</span>(<span class="str">"Cipher Text: %s\n"</span>, cipher);
+    <span class="cm">// Decryption</span>
+    fe = <span class="fn">fopen</span>(<span class="str">"file2.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (fe == NULL) { <span class="fn">printf</span>(<span class="str">"Encrypted file not found"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+    <span class="fn">fgets</span>(cipher, <span class="num">500</span>, fe); <span class="fn">fclose</span>(fe);
+    c = <span class="fn">strlen</span>(cipher);
+    fd = <span class="fn">fopen</span>(<span class="str">"decrypted.txt"</span>, <span class="str">"w"</span>);
+    <span class="type">char</span> decrypt[<span class="num">500</span>]; <span class="type">int</span> d = <span class="num">0</span>;
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; c; i += <span class="num">2</span>)
     {
-        printf("Encrypted file not found");
-        return 0;
+        <span class="type">char</span> a = cipher[i], b = cipher[i+<span class="num">1</span>];
+        <span class="type">int</span> r1, c1, r2, c2;
+        <span class="kw">for</span> (<span class="type">int</span> x=<span class="num">0</span>; x&lt;<span class="num">5</span>; x++)
+          <span class="kw">for</span> (<span class="type">int</span> y=<span class="num">0</span>; y&lt;<span class="num">5</span>; y++)
+          { <span class="kw">if</span>(matrix[x][y]==a){r1=x;c1=y;} <span class="kw">if</span>(matrix[x][y]==b){r2=x;c2=y;} }
+        <span class="kw">if</span> (r1==r2) { decrypt[d++]=matrix[r1][(c1+<span class="num">4</span>)%<span class="num">5</span>]; decrypt[d++]=matrix[r2][(c2+<span class="num">4</span>)%<span class="num">5</span>]; }
+        <span class="kw">else if</span> (c1==c2) { decrypt[d++]=matrix[(r1+<span class="num">4</span>)%<span class="num">5</span>][c1]; decrypt[d++]=matrix[(r2+<span class="num">4</span>)%<span class="num">5</span>][c2]; }
+        <span class="kw">else</span> { decrypt[d++]=matrix[r1][c2]; decrypt[d++]=matrix[r2][c1]; }
     }
-    fgets(cipher, 500, fe);
-    fclose(fe);
-    c = strlen(cipher);
-    fd = fopen("decrypted.txt", "w");
-    char decrypt[500];
-    int d = 0;
-    for (i = 0; i &lt; c; i += 2)
-    {
-        char a = cipher[i];
-        char b = cipher[i + 1];
-        int r1, c1, r2, c2;
-        for (int x = 0; x &lt; 5; x++)
-        {
-            for (int y = 0; y &lt; 5; y++)
-            {
-                if (matrix[x][y] == a)
-                {
-                    r1 = x;
-                    c1 = y;
-                }
-                if (matrix[x][y] == b)
-                {
-                    r2 = x;
-                    c2 = y;
-                }
-            }
-        }
-        if (r1 == r2)
-        {
-            decrypt[d++] = matrix[r1][(c1 + 4) % 5];
-            decrypt[d++] = matrix[r2][(c2 + 4) % 5];
-        }
-        else if (c1 == c2)
-        {
-            decrypt[d++] = matrix[(r1 + 4) % 5][c1];
-            decrypt[d++] = matrix[(r2 + 4) % 5][c2];
-        }
-        else
-        {
-            decrypt[d++] = matrix[r1][c2];
-            decrypt[d++] = matrix[r2][c1];
-        }
-    }
-    decrypt[d] = '\0';
-    fprintf(fd, "%s", decrypt);
-    fclose(fd);
-    printf("Decrypted Text: %s\n", decrypt);
-    return 0;
+    decrypt[d] = <span class="str">'\0'</span>;
+    <span class="fn">fprintf</span>(fd, <span class="str">"%s"</span>, decrypt); <span class="fn">fclose</span>(fd);
+    <span class="fn">printf</span>(<span class="str">"Decrypted Text: %s\n"</span>, decrypt);
+    <span class="kw">return</span> <span class="num">0</span>;
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 4 ==================== -->
+    <!-- PRACTICAL 4 -->
     <section class="practical" id="p4">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 4</span>
             <h2>Hill Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 4: Hill Cipher — Matrix-Based Encryption
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 4: Hill Cipher — Matrix-Based Encryption</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;ctype.h&gt;
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="cm">/* Full Hill Cipher - Encrypt & Decrypt with Matrix Inverse */</span>
+<span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;stdlib.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    int choice;
-    char cleanText[2000], resultText[2000];
-    int matrix[10][10], invMatrix[10][10];
-    int n, i, j, k, cleanLen = 0, ch;
-    printf("=== HILL CIPHER PROGRAM (NO FUNCTIONS) ===\n");
-    printf("1. Encrypt\n");
-    printf("2. Decrypt\n");
-    printf("Select an option (1 or 2): ");
-    if (scanf("%d", &amp;choice) != 1 || (choice != 1 &amp;&amp; choice != 2))
-    {
-        printf("Invalid choice! Program exiting.\n");
-        return 1;
+    <span class="type">int</span> choice;
+    <span class="type">char</span> cleanText[<span class="num">2000</span>], resultText[<span class="num">2000</span>];
+    <span class="type">int</span> matrix[<span class="num">10</span>][<span class="num">10</span>], invMatrix[<span class="num">10</span>][<span class="num">10</span>];
+    <span class="type">int</span> n, i, j, k, cleanLen = <span class="num">0</span>, ch;
+    <span class="fn">printf</span>(<span class="str">"=== HILL CIPHER PROGRAM ===\n1. Encrypt\n2. Decrypt\nSelect: "</span>);
+    <span class="kw">if</span> (<span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice) != <span class="num">1</span> || (choice != <span class="num">1</span> &amp;&amp; choice != <span class="num">2</span>))
+    { <span class="fn">printf</span>(<span class="str">"Invalid!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="type">FILE</span> *fp = <span class="fn">fopen</span>(<span class="str">"hillinput.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (!fp) { <span class="fn">printf</span>(<span class="str">"File not found!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="kw">while</span> ((ch=<span class="fn">fgetc</span>(fp))!=EOF &amp;&amp; cleanLen&lt;<span class="num">1990</span>)
+        <span class="kw">if</span> (<span class="fn">isalpha</span>(ch)) cleanText[cleanLen++] = <span class="fn">toupper</span>(ch);
+    <span class="fn">fclose</span>(fp); cleanText[cleanLen]=<span class="str">'\0'</span>;
+    <span class="kw">if</span> (!cleanLen) { <span class="fn">printf</span>(<span class="str">"No letters!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="fn">printf</span>(<span class="str">"Text: %s\nMatrix size N (2/3): "</span>, cleanText);
+    <span class="kw">if</span> (<span class="fn">scanf</span>(<span class="str">"%d"</span>,&amp;n)!=<span class="num">1</span>||(n!=<span class="num">2</span>&amp;&amp;n!=<span class="num">3</span>)) { <span class="fn">printf</span>(<span class="str">"N=2 or 3 only\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="fn">printf</span>(<span class="str">"Enter %dx%d matrix:\n"</span>, n, n);
+    <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;n;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++)
+    { <span class="fn">scanf</span>(<span class="str">"%d"</span>,&amp;matrix[i][j]); matrix[i][j]=(matrix[i][j]%<span class="num">26</span>+<span class="num">26</span>)%<span class="num">26</span>; }
+    <span class="kw">while</span>(cleanLen%n) cleanText[cleanLen++]=<span class="str">'X'</span>;
+    cleanText[cleanLen]=<span class="str">'\0'</span>;
+    <span class="kw">if</span> (choice==<span class="num">1</span>) {
+        <span class="type">int</span> r=<span class="num">0</span>;
+        <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;cleanLen;i+=n) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++)
+        { <span class="type">int</span> s=<span class="num">0</span>; <span class="kw">for</span>(k=<span class="num">0</span>;k&lt;n;k++) s+=matrix[j][k]*(cleanText[i+k]-<span class="str">'A'</span>);
+          resultText[r++]=((s%<span class="num">26</span>)+<span class="num">26</span>)%<span class="num">26</span>+<span class="str">'A'</span>; }
+        resultText[r]=<span class="str">'\0'</span>;
+        <span class="type">FILE</span> *o=<span class="fn">fopen</span>(<span class="str">"output.txt"</span>,<span class="str">"w"</span>); <span class="kw">if</span>(o){<span class="fn">fputs</span>(resultText,o);<span class="fn">fclose</span>(o);}
+        <span class="fn">printf</span>(<span class="str">"Encrypted: %s\n"</span>, resultText);
+    } <span class="kw">else</span> {
+        <span class="type">int</span> det=<span class="num">0</span>;
+        <span class="kw">if</span>(n==<span class="num">2</span>) det=matrix[<span class="num">0</span>][<span class="num">0</span>]*matrix[<span class="num">1</span>][<span class="num">1</span>]-matrix[<span class="num">0</span>][<span class="num">1</span>]*matrix[<span class="num">1</span>][<span class="num">0</span>];
+        <span class="kw">else</span> det=matrix[<span class="num">0</span>][<span class="num">0</span>]*(matrix[<span class="num">1</span>][<span class="num">1</span>]*matrix[<span class="num">2</span>][<span class="num">2</span>]-matrix[<span class="num">1</span>][<span class="num">2</span>]*matrix[<span class="num">2</span>][<span class="num">1</span>])
+              -matrix[<span class="num">0</span>][<span class="num">1</span>]*(matrix[<span class="num">1</span>][<span class="num">0</span>]*matrix[<span class="num">2</span>][<span class="num">2</span>]-matrix[<span class="num">1</span>][<span class="num">2</span>]*matrix[<span class="num">2</span>][<span class="num">0</span>])
+              +matrix[<span class="num">0</span>][<span class="num">2</span>]*(matrix[<span class="num">1</span>][<span class="num">0</span>]*matrix[<span class="num">2</span>][<span class="num">1</span>]-matrix[<span class="num">1</span>][<span class="num">1</span>]*matrix[<span class="num">2</span>][<span class="num">0</span>]);
+        det=(det%<span class="num">26</span>+<span class="num">26</span>)%<span class="num">26</span>;
+        <span class="type">int</span> detInv=-<span class="num">1</span>;
+        <span class="kw">for</span>(<span class="type">int</span> x=<span class="num">1</span>;x&lt;<span class="num">26</span>;x++) <span class="kw">if</span>((det*x)%<span class="num">26</span>==<span class="num">1</span>){detInv=x;<span class="kw">break</span>;}
+        <span class="kw">if</span>(detInv==-<span class="num">1</span>){<span class="fn">printf</span>(<span class="str">"Not invertible!\n"</span>);<span class="kw">return</span> <span class="num">1</span>;}
+        <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;n;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++) {
+            <span class="type">int</span> sd=<span class="num">0</span>;
+            <span class="kw">if</span>(n==<span class="num">2</span>){<span class="type">int</span> r=(i==<span class="num">0</span>)?<span class="num">1</span>:<span class="num">0</span>,c=(j==<span class="num">0</span>)?<span class="num">1</span>:<span class="num">0</span>; sd=matrix[r][c];}
+            <span class="kw">else</span>{<span class="type">int</span> sub[<span class="num">2</span>][<span class="num">2</span>],ri=<span class="num">0</span>;
+              <span class="kw">for</span>(<span class="type">int</span> row=<span class="num">0</span>;row&lt;<span class="num">3</span>;row++){<span class="kw">if</span>(row==i)<span class="kw">continue</span>;<span class="type">int</span> ci=<span class="num">0</span>;
+                <span class="kw">for</span>(<span class="type">int</span> col=<span class="num">0</span>;col&lt;<span class="num">3</span>;col++){<span class="kw">if</span>(col==j)<span class="kw">continue</span>;sub[ri][ci++]=matrix[row][col];}ri++;}
+              sd=sub[<span class="num">0</span>][<span class="num">0</span>]*sub[<span class="num">1</span>][<span class="num">1</span>]-sub[<span class="num">0</span>][<span class="num">1</span>]*sub[<span class="num">1</span>][<span class="num">0</span>];}
+            <span class="type">int</span> cof=((i+j)%<span class="num">2</span>==<span class="num">0</span>?<span class="num">1</span>:-<span class="num">1</span>)*sd;
+            invMatrix[j][i]=((cof%<span class="num">26</span>+<span class="num">26</span>)%<span class="num">26</span>*detInv)%<span class="num">26</span>;
+        }
+        <span class="type">int</span> r=<span class="num">0</span>;
+        <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;cleanLen;i+=n) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++)
+        { <span class="type">int</span> s=<span class="num">0</span>; <span class="kw">for</span>(k=<span class="num">0</span>;k&lt;n;k++) s+=invMatrix[j][k]*(cleanText[i+k]-<span class="str">'A'</span>);
+          resultText[r++]=((s%<span class="num">26</span>)+<span class="num">26</span>)%<span class="num">26</span>+<span class="str">'A'</span>; }
+        resultText[r]=<span class="str">'\0'</span>;
+        <span class="type">FILE</span> *o=<span class="fn">fopen</span>(<span class="str">"output.txt"</span>,<span class="str">"w"</span>); <span class="kw">if</span>(o){<span class="fn">fputs</span>(resultText,o);<span class="fn">fclose</span>(o);}
+        <span class="fn">printf</span>(<span class="str">"Decrypted: %s\n"</span>, resultText);
     }
-    //--- STEP 1: READ TEXT FROM FILE INLINE ---
-    FILE *fp = fopen("hillinput.txt", "r");
-    if (fp == NULL)
-    {
-        printf("\n[ERROR] File 'hillinput.txt' not found!\n");
-        return 1;
-    }
-    while ((ch = fgetc(fp)) != EOF &amp;&amp; cleanLen &lt; 1990)
-    {
-        if (isalpha(ch))
-        {
-            cleanText[cleanLen++] = toupper((unsigned char)ch);
-        }
-    }
-    fclose(fp);
-    cleanText[cleanLen] = '\0';
-    if (cleanLen == 0)
-    {
-        printf("\n[ERROR] 'hillinput.txt' contains no valid alphabetic letters!\n");
-        return 1;
-    }
-    printf("\nCleaned Input Text: %s\n", cleanText);
-    // --- STEP 2: INPUT MATRIX SIZE &amp; ELEMENTS ---
-    printf("Enter matrix size N (2 or 3): ");
-    if (scanf("%d", &amp;n) != 1 || (n != 2 &amp;&amp; n != 3))
-    {
-        printf("[ERROR] This single-main version supports N=2 or N=3.\n");
-        return 1;
-    }
-    printf("\nEnter %dx%d Key Matrix elements row by row:\n", n, n);
-    for (i = 0; i &lt; n; i++)
-    {
-        printf("Row %d values (%d numbers): ", i + 1, n);
-        for (j = 0; j &lt; n; j++)
-        {
-            scanf("%d", &amp;matrix[i][j]);
-            // Normalize inputs into range [0, 25]
-            matrix[i][j] = (matrix[i][j] % 26 + 26) % 26;
-        }
-    }
-    // Pad text with 'X' if length is not a multiple of matrix size N
-    while (cleanLen % n != 0)
-    {
-        cleanText[cleanLen++] = 'X';
-    }
-    cleanText[cleanLen] = '\0';
-    printf("Padded Text for Processing: %s\n", cleanText);
-    // --- STEP 3: ENCRYPTION/DECRYPTION ---
-    if (choice == 1)
-    {
-        // -------- ENCRYPTION --------
-        int resIdx = 0;
-        for (i = 0; i &lt; cleanLen; i += n)
-        {
-            for (j = 0; j &lt; n; j++)
-            {
-                int sum = 0;
-                for (k = 0; k &lt; n; k++)
-                {
-                    int val = cleanText[i + k] - 'A';
-                    sum += matrix[j][k] * val;
-                }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
-            }
-        }
-        resultText[resIdx] = '\0';
-        FILE *outFp = fopen("output.txt", "w");
-        if (outFp != NULL)
-        {
-            fputs(resultText, outFp);
-            fclose(outFp);
-        }
-        printf("\n-------------------------\n");
-        printf("Encryption Successful!\n");
-        printf("Generated Ciphertext: %s\n", resultText);
-        printf("Result saved to 'output.txt'\n");
-        printf("-------------------------\n");
-    }
-    else if (choice == 2)
-    {
-        // -------- DECRYPTION --------
-        int det = 0;
-        if (n == 2)
-        {
-            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
-        else if (n == 3)
-        {
-            det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
-                  matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
-                  matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
-        }
-        det = (det % 26 + 26) % 26;
-        int detInv = -1;
-        for (int x = 1; x &lt; 26; x++)
-        {
-            if ((det * x) % 26 == 1)
-            {
-                detInv = x;
-                break;
-            }
-        }
-        if (detInv == -1)
-        {
-            printf("\n[ERROR] Key matrix is not invertible modulo 26! (gcd(det, 26) != 1)\n");
-            return 1;
-        }
-        for (i = 0; i &lt; n; i++)
-        {
-            for (j = 0; j &lt; n; j++)
-            {
-                int subDet = 0;
-                if (n == 2)
-                {
-                    int r = (i == 0) ? 1 : 0;
-                    int c = (j == 0) ? 1 : 0;
-                    subDet = matrix[r][c];
-                }
-                else if (n == 3)
-                {
-                    int sub[2][2];
-                    int r_idx = 0;
-                    for (int row = 0; row &lt; 3; row++)
-                    {
-                        if (row == i) continue;
-                        int c_idx = 0;
-                        for (int col = 0; col &lt; 3; col++)
-                        {
-                            if (col == j) continue;
-                            sub[r_idx][c_idx++] = matrix[row][col];
-                        }
-                        r_idx++;
-                    }
-                    subDet = sub[0][0] * sub[1][1] - sub[0][1] * sub[1][0];
-                }
-                int sign = ((i + j) % 2 == 0) ? 1 : -1;
-                int cofactor = sign * subDet;
-                cofactor = (cofactor % 26 + 26) % 26;
-                invMatrix[j][i] = (cofactor * detInv) % 26;
-            }
-        }
-        printf("\nCalculated Inverse Key Matrix (mod 26):\n");
-        for (i = 0; i &lt; n; i++)
-        {
-            for (j = 0; j &lt; n; j++)
-            {
-                printf("%2d ", invMatrix[i][j]);
-            }
-            printf("\n");
-        }
-        int resIdx = 0;
-        for (i = 0; i &lt; cleanLen; i += n)
-        {
-            for (j = 0; j &lt; n; j++)
-            {
-                int sum = 0;
-                for (k = 0; k &lt; n; k++)
-                {
-                    int val = cleanText[i + k] - 'A';
-                    sum += invMatrix[j][k] * val;
-                }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
-            }
-        }
-        resultText[resIdx] = '\0';
-        FILE *outFp = fopen("output.txt", "w");
-        if (outFp != NULL)
-        {
-            fputs(resultText, outFp);
-            fclose(outFp);
-        }
-        printf("\n-------------------------\n");
-        printf("Decryption Successful!\n");
-        printf("Generated Plaintext: %s\n", resultText);
-        printf("Result saved to 'output.txt'\n");
-        printf("-------------------------\n");
-    }
-    return 0;
+    <span class="kw">return</span> <span class="num">0</span>;
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 5 ==================== -->
+    <!-- PRACTICAL 5 -->
     <section class="practical" id="p5">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 5</span>
             <h2>Vigenere Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 5: Vigenere Cipher (with Autokey Option)
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 5: Vigenere Cipher (with Autokey Option)</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;ctype.h&gt;
-#define MAX_LEN 1000
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;stdlib.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+<span class="pp">#define</span> MAX_LEN <span class="num">1000</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    char input_text[MAX_LEN] = {0};
-    char initial_key[MAX_LEN] = {0};
-    char adjusted_key[MAX_LEN] = {0};
-    char output_text[MAX_LEN] = {0};
-    int mode_choice, key_choice;
-    int text_len, k_len, i;
-    FILE *fin, *fout;
-    printf("--- Cryptography System ---\n");
-    printf("1. Encrypt plaintext\n");
-    printf("2. Decrypt ciphertext\n");
-    printf("Enter operational choice (1 or 2): ");
-    if (scanf("%d", &amp;mode_choice) != 1) return 1;
-    // Read input from input.txt
-    fin = fopen("input.txt", "r");
-    if (fin == NULL)
+    <span class="type">char</span> input_text[MAX_LEN]={<span class="num">0</span>}, initial_key[MAX_LEN]={<span class="num">0</span>};
+    <span class="type">char</span> adjusted_key[MAX_LEN]={<span class="num">0</span>}, output_text[MAX_LEN]={<span class="num">0</span>};
+    <span class="type">int</span> mode_choice, key_choice, text_len, k_len, i;
+    <span class="type">FILE</span> *fin, *fout;
+    <span class="fn">printf</span>(<span class="str">"--- Cryptography System ---\n1. Encrypt\n2. Decrypt\nChoice: "</span>);
+    <span class="kw">if</span> (<span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;mode_choice) != <span class="num">1</span>) <span class="kw">return</span> <span class="num">1</span>;
+    fin = <span class="fn">fopen</span>(<span class="str">"input.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (!fin) { <span class="fn">printf</span>(<span class="str">"Cannot open input.txt!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="fn">fgets</span>(input_text, MAX_LEN, fin);
+    input_text[<span class="fn">strcspn</span>(input_text, <span class="str">"\r\n"</span>)] = <span class="num">0</span>;
+    <span class="fn">fclose</span>(fin);
+    text_len = <span class="fn">strlen</span>(input_text);
+    <span class="kw">if</span> (!text_len) { <span class="fn">printf</span>(<span class="str">"Empty file!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    <span class="fn">printf</span>(<span class="str">"Text: %s\nKey: "</span>, input_text);
+    <span class="fn">scanf</span>(<span class="str">"%s"</span>, initial_key);
+    k_len = <span class="fn">strlen</span>(initial_key);
+    <span class="fn">printf</span>(<span class="str">"1. Vigenere repeat\n2. Autokey\nChoice: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;key_choice);
+    <span class="kw">if</span> (key_choice==<span class="num">1</span>)
+    { <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;text_len;i++) adjusted_key[i]=initial_key[i%k_len]; }
+    <span class="kw">else if</span> (key_choice==<span class="num">2</span>)
     {
-        printf("Error: Could not open 'input.txt'. Please create it first!\n");
-        return 1;
+        <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;k_len;i++) adjusted_key[i]=initial_key[i];
+        <span class="kw">if</span>(mode_choice==<span class="num">1</span>)
+            <span class="kw">for</span>(i=k_len;i&lt;text_len;i++) adjusted_key[i]=input_text[i-k_len];
+        <span class="kw">else</span>
+            <span class="kw">for</span>(i=k_len;i&lt;text_len;i++) adjusted_key[i]=<span class="str">'\0'</span>;
     }
-    fgets(input_text, MAX_LEN, fin);
-    input_text[strcspn(input_text, "\r\n")] = 0;
-    fclose(fin);
-    text_len = strlen(input_text);
-    if (text_len == 0)
+    <span class="kw">else</span> { <span class="fn">printf</span>(<span class="str">"Invalid!\n"</span>); <span class="kw">return</span> <span class="num">1</span>; }
+    adjusted_key[text_len]=<span class="str">'\0'</span>;
+    <span class="kw">for</span> (i=<span class="num">0</span>; i&lt;text_len; i++)
     {
-        printf("Error: 'input.txt' is empty.\n");
-        return 1;
-    }
-    printf("\nText read from file: %s\n", input_text);
-    printf("Enter the secret key: ");
-    scanf("%s", initial_key);
-    k_len = strlen(initial_key);
-    printf("\n--- Keystream Adjustment Menu ---\n");
-    printf("1. Repeat the key to match length (Vigenere style)\n");
-    printf("2. Use Autokey style to match length\n");
-    printf("Enter choice (1 or 2): ");
-    scanf("%d", &amp;key_choice);
-    if (key_choice == 1)
-    {
-        for (i = 0; i &lt; text_len; i++)
+        <span class="kw">if</span> (<span class="fn">isalpha</span>(input_text[i]))
         {
-            adjusted_key[i] = initial_key[i % k_len];
-        }
-        adjusted_key[text_len] = '\0';
-    }
-    else if (key_choice == 2)
-    {
-        for (i = 0; i &lt; k_len; i++)
-        {
-            adjusted_key[i] = initial_key[i];
-        }
-        if (mode_choice == 1)
-        {
-            for (i = k_len; i &lt; text_len; i++)
-            {
-                adjusted_key[i] = input_text[i - k_len];
+            <span class="type">char</span> tb=<span class="fn">isupper</span>(input_text[i])?<span class="str">'A'</span>:<span class="str">'a'</span>;
+            <span class="type">char</span> kb=<span class="fn">isupper</span>(adjusted_key[i])?<span class="str">'A'</span>:<span class="str">'a'</span>;
+            <span class="type">int</span> tv=input_text[i]-tb, kv=adjusted_key[i]-kb;
+            <span class="kw">if</span>(mode_choice==<span class="num">1</span>)
+                output_text[i]=((tv+kv)%<span class="num">26</span>)+tb;
+            <span class="kw">else</span> {
+                output_text[i]=((tv-kv+<span class="num">26</span>)%<span class="num">26</span>)+tb;
+                <span class="kw">if</span>(key_choice==<span class="num">2</span> &amp;&amp; i+k_len&lt;text_len)
+                    adjusted_key[i+k_len]=output_text[i];
             }
-        }
-        else
-        {
-            for (i = k_len; i &lt; text_len; i++)
-            {
-                adjusted_key[i] = '\0';
-            }
-        }
-        adjusted_key[text_len] = '\0';
-    }
-    else
-    {
-        printf("Invalid choice! Exiting program.\n");
-        return 1;
-    }
-    for (i = 0; i &lt; text_len; i++)
-    {
-        if (isalpha(input_text[i]))
-        {
-            char t_base = isupper(input_text[i]) ? 'A' : 'a';
-            char k_base = isupper(adjusted_key[i]) ? 'A' : 'a';
-            int t_val = input_text[i] - t_base;
-            int k_val = adjusted_key[i] - k_base;
-            if (mode_choice == 1)
-            {
-                output_text[i] = ((t_val + k_val) % 26) + t_base;
-            }
-            else
-            {
-                output_text[i] = ((t_val - k_val + 26) % 26) + t_base;
-                if (key_choice == 2 &amp;&amp; (i + k_len &lt; text_len))
-                {
-                    adjusted_key[i + k_len] = output_text[i];
-                }
-            }
-        }
-        else
-        {
-            output_text[i] = input_text[i];
-            if (mode_choice == 2 &amp;&amp; key_choice == 2 &amp;&amp; (i + k_len &lt; text_len))
-            {
-                adjusted_key[i + k_len] = input_text[i];
-            }
+        } <span class="kw">else</span> {
+            output_text[i]=input_text[i];
+            <span class="kw">if</span>(mode_choice==<span class="num">2</span> &amp;&amp; key_choice==<span class="num">2</span> &amp;&amp; i+k_len&lt;text_len)
+                adjusted_key[i+k_len]=input_text[i];
         }
     }
-    output_text[text_len] = '\0';
-    fout = fopen("output.txt", "w");
-    if (fout == NULL)
-    {
-        printf("Error: Could not create 'output.txt'.\n");
-        return 1;
-    }
-    if (mode_choice == 1)
-    {
-        fprintf(fout, "Ciphertext: %s\n", output_text);
-    }
-    else
-    {
-        fprintf(fout, "Plaintext: %s\n", output_text);
-    }
-    fprintf(fout, "Used Keystream: %s\n", adjusted_key);
-    fclose(fout);
-    printf("\nOperation successful! Results saved to 'output.txt'.\n");
-    return 0;
+    output_text[text_len]=<span class="str">'\0'</span>;
+    fout=<span class="fn">fopen</span>(<span class="str">"output.txt"</span>,<span class="str">"w"</span>);
+    <span class="kw">if</span>(mode_choice==<span class="num">1</span>) <span class="fn">fprintf</span>(fout,<span class="str">"Ciphertext: %s\n"</span>,output_text);
+    <span class="kw">else</span> <span class="fn">fprintf</span>(fout,<span class="str">"Plaintext: %s\n"</span>,output_text);
+    <span class="fn">fprintf</span>(fout,<span class="str">"Keystream: %s\n"</span>,adjusted_key);
+    <span class="fn">fclose</span>(fout);
+    <span class="fn">printf</span>(<span class="str">"Done! Check output.txt\n"</span>);
+    <span class="kw">return</span> <span class="num">0</span>;
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 6 ==================== -->
+    <!-- PRACTICAL 6 -->
     <section class="practical" id="p6">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 6</span>
             <h2>Columnar Transposition Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 6: Columnar Transposition Cipher
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 6: Columnar Transposition Cipher</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    int choice, i, j, k, rows, n;
-    char text[100], key[20], result[100];
-    char matrix[100][20];
-    FILE *input, *output;
-    printf("--- Columnar Transposition Cipher ---\n");
-    printf("1. Encrypt plaintext\n");
-    printf("2. Decrypt ciphertext\n");
-    printf("Enter operational choice (1 or 2): ");
-    scanf("%d", &amp;choice);
-    printf("Enter the secret key: ");
-    scanf("%s", key);
-    n = strlen(key);
-    input = fopen("input.txt", "r");
-    if (input == NULL)
+    <span class="type">int</span> choice, i, j, k, rows, n;
+    <span class="type">char</span> text[<span class="num">100</span>], key[<span class="num">20</span>], result[<span class="num">100</span>];
+    <span class="type">char</span> matrix[<span class="num">100</span>][<span class="num">20</span>];
+    <span class="type">FILE</span> *input, *output;
+    <span class="fn">printf</span>(<span class="str">"--- Columnar Transposition ---\n1. Encrypt\n2. Decrypt\nChoice: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice);
+    <span class="fn">printf</span>(<span class="str">"Key: "</span>); <span class="fn">scanf</span>(<span class="str">"%s"</span>, key);
+    n = <span class="fn">strlen</span>(key);
+    input = <span class="fn">fopen</span>(<span class="str">"input.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (!input) { <span class="fn">printf</span>(<span class="str">"File not found!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+    output = <span class="fn">fopen</span>(<span class="str">"output.txt"</span>, <span class="str">"w"</span>);
+    <span class="kw">while</span> (<span class="fn">fgets</span>(text, <span class="kw">sizeof</span>(text), input))
     {
-        printf("Input file not found!");
-        return 0;
+        text[<span class="fn">strcspn</span>(text, <span class="str">"\n"</span>)] = <span class="str">'\0'</span>;
+        <span class="kw">if</span> (!<span class="fn">strlen</span>(text)) <span class="kw">continue</span>;
+        <span class="kw">if</span> (choice == <span class="num">1</span>)
+        {
+            <span class="kw">while</span> (<span class="fn">strlen</span>(text) % n) <span class="fn">strcat</span>(text, <span class="str">"X"</span>);
+            rows = <span class="fn">strlen</span>(text) / n;
+            k = <span class="num">0</span>;
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;rows;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++) matrix[i][j]=text[k++];
+            k = <span class="num">0</span>;
+            <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++) <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;rows;i++) result[k++]=matrix[i][j];
+            result[k] = <span class="str">'\0'</span>;
+        }
+        <span class="kw">else if</span> (choice == <span class="num">2</span>)
+        {
+            rows = <span class="fn">strlen</span>(text) / n;
+            k = <span class="num">0</span>;
+            <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++) <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;rows;i++) matrix[i][j]=text[k++];
+            k = <span class="num">0</span>;
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;rows;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;n;j++) result[k++]=matrix[i][j];
+            result[k] = <span class="str">'\0'</span>;
+        }
+        <span class="kw">else</span> { <span class="fn">printf</span>(<span class="str">"Invalid!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+        <span class="fn">fprintf</span>(output, <span class="str">"%s\n"</span>, result);
     }
-    output = fopen("output.txt", "w");
-    while (fgets(text, sizeof(text), input) != NULL)
-    {
-        text[strcspn(text, "\n")] = '\0';
-        if (strlen(text) == 0)
-        {
-            continue;
-        }
-        if (choice == 1)
-        {
-            while (strlen(text) % n != 0)
-            {
-                strcat(text, "X");
-            }
-            rows = strlen(text) / n;
-            k = 0;
-            for (i = 0; i &lt; rows; i++)
-            {
-                for (j = 0; j &lt; n; j++)
-                {
-                    matrix[i][j] = text[k++];
-                }
-            }
-            k = 0;
-            for (j = 0; j &lt; n; j++)
-            {
-                for (i = 0; i &lt; rows; i++)
-                {
-                    result[k++] = matrix[i][j];
-                }
-            }
-            result[k] = '\0';
-        }
-        else if (choice == 2)
-        {
-            rows = strlen(text) / n;
-            k = 0;
-            for (j = 0; j &lt; n; j++)
-            {
-                for (i = 0; i &lt; rows; i++)
-                {
-                    matrix[i][j] = text[k++];
-                }
-            }
-            k = 0;
-            for (i = 0; i &lt; rows; i++)
-            {
-                for (j = 0; j &lt; n; j++)
-                {
-                    result[k++] = matrix[i][j];
-                }
-            }
-            result[k] = '\0';
-        }
-        else
-        {
-            printf("Invalid choice!");
-            return 0;
-        }
-        fprintf(output, "%s\n", result);
-    }
-    fclose(input);
-    fclose(output);
-    printf("\nOperation successful!\n");
-    printf("Results saved to output.txt\n");
-    return 0;
+    <span class="fn">fclose</span>(input); <span class="fn">fclose</span>(output);
+    <span class="fn">printf</span>(<span class="str">"Done! Check output.txt\n"</span>);
+    <span class="kw">return</span> <span class="num">0</span>;
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PRACTICAL 7 ==================== -->
+    <!-- PRACTICAL 7 -->
     <section class="practical" id="p7">
         <div class="practical-header">
             <span class="practical-number">PRACTICAL 7</span>
             <h2>Rail Fence Transposition Cipher</h2>
         </div>
         <div class="sub-practical">
-            <div class="sub-header">
-                <h3>
-                    <span class="sub-tag tag-c">C</span>
-                    Practical 7: Rail Fence Transposition Cipher
-                </h3>
-            </div>
+            <div class="sub-header"><h3><span class="sub-tag">C</span> Practical 7: Rail Fence Transposition Cipher</h3></div>
             <div class="code-wrapper">
-                <button class="copy-btn" onclick="copyCode(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Copy
-                </button>
-                <pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-int main()
+                <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+<pre><code><span class="pp">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="pp">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="type">int</span> <span class="fn">main</span>()
 {
-    int choice, key, i, j, k, len;
-    char text[100], result[100];
-    char rail[20][100];
-    FILE *input, *output;
-    printf("--- Rail Fence Transposition Cipher ---\n");
-    printf("1. Encrypt plaintext\n");
-    printf("2. Decrypt ciphertext\n");
-    printf("Enter operational choice (1 or 2): ");
-    scanf("%d", &amp;choice);
-    printf("Enter number of rails: ");
-    scanf("%d", &amp;key);
-    input = fopen("input.txt", "r");
-    if (input == NULL)
+    <span class="type">int</span> choice, key, i, j, k, len;
+    <span class="type">char</span> text[<span class="num">100</span>], result[<span class="num">100</span>];
+    <span class="type">char</span> rail[<span class="num">20</span>][<span class="num">100</span>];
+    <span class="type">FILE</span> *input, *output;
+    <span class="fn">printf</span>(<span class="str">"--- Rail Fence Cipher ---\n1. Encrypt\n2. Decrypt\nChoice: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice);
+    <span class="fn">printf</span>(<span class="str">"Rails: "</span>); <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;key);
+    input = <span class="fn">fopen</span>(<span class="str">"input.txt"</span>, <span class="str">"r"</span>);
+    <span class="kw">if</span> (!input) { <span class="fn">printf</span>(<span class="str">"File not found!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+    output = <span class="fn">fopen</span>(<span class="str">"output.txt"</span>, <span class="str">"w"</span>);
+    <span class="kw">while</span> (<span class="fn">fgets</span>(text, <span class="kw">sizeof</span>(text), input))
     {
-        printf("Input file not found!");
-        return 0;
+        text[<span class="fn">strcspn</span>(text, <span class="str">"\n"</span>)] = <span class="str">'\0'</span>;
+        <span class="kw">if</span> (!<span class="fn">strlen</span>(text)) <span class="kw">continue</span>;
+        len = <span class="fn">strlen</span>(text);
+        <span class="kw">if</span> (choice == <span class="num">1</span>)
+        {
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;key;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++) rail[i][j]=<span class="str">'\n'</span>;
+            i=<span class="num">0</span>; k=<span class="num">1</span>;
+            <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++)
+            {
+                rail[i][j]=text[j];
+                <span class="kw">if</span>(i==key-<span class="num">1</span>) k=-<span class="num">1</span>;
+                <span class="kw">else if</span>(i==<span class="num">0</span>) k=<span class="num">1</span>;
+                i+=k;
+            }
+            k=<span class="num">0</span>;
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;key;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++)
+                <span class="kw">if</span>(rail[i][j]!=<span class="str">'\n'</span>) result[k++]=rail[i][j];
+            result[k]=<span class="str">'\0'</span>;
+        }
+        <span class="kw">else if</span> (choice == <span class="num">2</span>)
+        {
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;key;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++) rail[i][j]=<span class="str">'\n'</span>;
+            i=<span class="num">0</span>; k=<span class="num">1</span>;
+            <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++)
+            {
+                rail[i][j]=<span class="str">'*'</span>;
+                <span class="kw">if</span>(i==key-<span class="num">1</span>) k=-<span class="num">1</span>;
+                <span class="kw">else if</span>(i==<span class="num">0</span>) k=<span class="num">1</span>;
+                i+=k;
+            }
+            k=<span class="num">0</span>;
+            <span class="kw">for</span>(i=<span class="num">0</span>;i&lt;key;i++) <span class="kw">for</span>(j=<span class="num">0</span>;j&lt;len;j++)
+                <span class="kw">if</span>(rail[i][j]==<span class="str">'*'</span>) rail[i][j]=text[k++];
+            k=<span class="num">0</span>; i=<span class="num">0</span>; j=<span class="num">1</span>;
+            <span class="kw">while</span>(k&lt;len)
+            {
+                result[k++]=rail[i][k-<span class="num">1</span>];
+                <span class="kw">if</span>(i==key-<span class="num">1</span>) j=-<span class="num">1</span>;
+                <span class="kw">else if</span>(i==<span class="num">0</span>) j=<span class="num">1</span>;
+                i+=j;
+            }
+            result[k]=<span class="str">'\0'</span>;
+        }
+        <span class="kw">else</span> { <span class="fn">printf</span>(<span class="str">"Invalid!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
+        <span class="fn">fprintf</span>(output, <span class="str">"%s\n"</span>, result);
     }
-    output = fopen("output.txt", "w");
-    while (fgets(text, sizeof(text), input) != NULL)
-    {
-        text[strcspn(text, "\n")] = '\0';
-        if (strlen(text) == 0)
-        {
-            continue;
-        }
-        len = strlen(text);
-        if (choice == 1)
-        {
-            for (i = 0; i &lt; key; i++)
-            {
-                for (j = 0; j &lt; len; j++)
-                {
-                    rail[i][j] = '\n';
-                }
-            }
-            i = 0;
-            k = 1;
-            for (j = 0; j &lt; len; j++)
-            {
-                rail[i][j] = text[j];
-                if (i == key - 1)
-                {
-                    k = -1;
-                }
-                else if (i == 0)
-                {
-                    k = 1;
-                }
-                i = i + k;
-            }
-            k = 0;
-            for (i = 0; i &lt; key; i++)
-            {
-                for (j = 0; j &lt; len; j++)
-                {
-                    if (rail[i][j] != '\n')
-                    {
-                        result[k++] = rail[i][j];
-                    }
-                }
-            }
-            result[k] = '\0';
-        }
-        else if (choice == 2)
-        {
-            for (i = 0; i &lt; key; i++)
-            {
-                for (j = 0; j &lt; len; j++)
-                {
-                    rail[i][j] = '\n';
-                }
-            }
-            i = 0;
-            k = 1;
-            for (j = 0; j &lt; len; j++)
-            {
-                rail[i][j] = '*';
-                if (i == key - 1)
-                {
-                    k = -1;
-                }
-                else if (i == 0)
-                {
-                    k = 1;
-                }
-                i = i + k;
-            }
-            k = 0;
-            for (i = 0; i &lt; key; i++)
-            {
-                for (j = 0; j &lt; len; j++)
-                {
-                    if (rail[i][j] == '*')
-                    {
-                        rail[i][j] = text[k++];
-                    }
-                }
-            }
-            k = 0;
-            i = 0;
-            j = 1;
-            while (k &lt; len)
-            {
-                result[k++] = rail[i][k - 1];
-                if (i == key - 1)
-                {
-                    j = -1;
-                }
-                else if (i == 0)
-                {
-                    j = 1;
-                }
-                i = i + j;
-            }
-            result[k] = '\0';
-        }
-        else
-        {
-            printf("Invalid choice!");
-            return 0;
-        }
-        fprintf(output, "%s\n", result);
-    }
-    fclose(input);
-    fclose(output);
-    printf("\nOperation successful!\n");
-    printf("Results saved to output.txt\n");
-    return 0;
+    <span class="fn">fclose</span>(input); <span class="fn">fclose</span>(output);
+    <span class="fn">printf</span>(<span class="str">"Done! Check output.txt\n"</span>);
+    <span class="kw">return</span> <span class="num">0</span>;
 }</code></pre>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <div class="footer">
-        <p>INS Practicals &bull; Information &amp; Network Security &bull; BTCO13501</p>
-        <p style="margin-top:0.3rem; font-size:0.8rem;">ET24BTCO156 &bull; Prey Goti</p>
+        <p>INS Practicals &bull; Information &amp; Network Security</p>
     </div>
 
 </div>
 
-<!-- Prism.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
-
 <script>
 function copyCode(btn) {
-    const codeBlock = btn.parentElement.querySelector('code');
-    // Use textContent to preserve exact C indentation
-    const text = codeBlock.textContent.replace(/^\n+/, '').replace(/\n+$/, '');
-
+    const code = btn.parentElement.querySelector('code');
+    const text = code.textContent.replace(/^\n+/, '').replace(/\n+$/, '');
     navigator.clipboard.writeText(text).then(() => {
         btn.classList.add('copied');
-        btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Copied!
-        `;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
         setTimeout(() => {
             btn.classList.remove('copied');
-            btn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Copy
-            `;
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
         }, 2000);
     }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
         btn.classList.add('copied');
-        btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Copied!
-        `;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
         setTimeout(() => {
             btn.classList.remove('copied');
-            btn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Copy
-            `;
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
         }, 2000);
     });
 }
 
-// Auto-download .txt file on page load
+// Auto-download txt file
 window.addEventListener('load', function() {
-    const fileContent = `/* ============================================================
-   Subject: BTCO13501 - Information & Network Security (INS)
-   Enrollment No: ET24BTCO156   Name: Prey Goti
-   ============================================================
-   NOTE: Each practical below is a STANDALONE program (each has
-   its own main()). They are kept exactly as extracted from your
-   lab record. Compile/run ONE practical at a time (comment out
-   the others, or copy the block you need into its own .c file).
-   ============================================================ */
-
-
-/* ============================================================
-   PRACTICAL 1 : Caesar Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <ctype.h>
-int main()
-{
-    int choice, key;
-    int ch;
-    FILE *fin, *fout;
-    printf("\\n1) Encrypt (plain text ---> cipher text)");
-    printf("\\n2) Decrypt (cipher text ---> plain text)");
-    printf("\\n3) exit");
-    printf("\\nselect your choice :");
-    scanf("%d", &choice);
-    printf("enter your key(1-25) :");
-    scanf("%d", &key);
-    if (choice == 1)
-    {
-        fin = fopen("input.txt", "r");
-        fout = fopen("inout.txt", "w");
-        if (fin == NULL)
-        {
-            printf("file is empty");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            char base;
-            if (isalpha(ch))
-            {
-                if (isupper(ch))
-                {
-                    base = 'A';
-                }
-                else
-                {
-                    base = 'a';
-                }
-                int n = ch - base;
-                n = (n + key) % 26;
-                ch = n + base;
-            }
-            fputc(ch, fout);
-        }
-        fclose(fin);
-        fclose(fout);
-        printf("done!!!!!!!!!!!!!!!!!!!!");
-    }
-    else if (choice == 2)
-    {
-        fin = fopen("input.txt", "r");
-        fout = fopen("inout.txt", "w");
-        if (fin == NULL)
-        {
-            printf("file is empty");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            char base;
-            if (isalpha(ch))
-            {
-                if (isupper(ch))
-                {
-                    base = 'A';
-                }
-                else
-                {
-                    base = 'a';
-                }
-                int n = ch - base;
-                n = (n - key + 26) % 26;
-                ch = n + base;
-            }
-            fputc(ch, fout);
-        }
-        fclose(fin);
-        fclose(fout);
-        printf("done!!!!!!!!!!!!!!!!!!!!");
-    }
-    else
-    {
-        printf("please select proper choice ");
-    }
-}
-
-
-/* ============================================================
-   PRACTICAL 2 : Monoalphabetic Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-
-const char ALPHABET[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-const char KEY[] = {'M', 'U', 'A', 'L', 'V', 'O', 'Z', 'K', 'R', 'N', 'J', 'X', 'Q', 'D', 'F', 'S', 'H', 'P', 'E', 'B',
-'C', 'T', 'I', 'W', 'Y', 'G'};
-int main()
-{
-    int choice;
-    int ch;
-    FILE *fin, *fout;
-    printf("\\n1) Encrypt");
-    printf("\\n2) Decrypt");
-    printf("\\n3) Exit");
-    printf("\\n select any that you want to perform on your text :");
-    scanf("%d", &choice);
-    if (choice == 1)
-    {
-        fin = fopen("D:\\\\ET24BTCO156\\\\mono.txt", "r");
-        fout = fopen("D:\\\\ET24BTCO156\\\\mono_output.txt", "w");
-        if (fin == NULL)
-        {
-            printf("File is empty !!!");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            if (isalpha(ch))
-            {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int i = 0; i < 26; i++)
-                {
-                    if (ALPHABET[i] == is_uper)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                char cipher_text = KEY[index];
-                if (is_lower)
-                {
-                    ch = tolower(cipher_text);
-                }
-                else
-                {
-                    ch = cipher_text;
-                }
-            }
-            fputc(ch, fout);
-        }
-        fclose(fin);
-        fclose(fout);
-        printf("Encryption done! Check mono_output.txt");
-    }
-    else if (choice == 2)
-    {
-        fin = fopen("D:\\\\ET24BTCO156\\\\mono_output.txt", "r");
-        fout = fopen("D:\\\\ET24BTCO156\\\\mono_dec.txt", "w");
-        if (fin == NULL)
-        {
-            printf("File is empty !!!");
-            return 0;
-        }
-        while ((ch = fgetc(fin)) != EOF)
-        {
-            if (isalpha(ch))
-            {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int i = 0; i < 26; i++)
-                {
-                    if (KEY[i] == is_uper)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                char cipher_text = ALPHABET[index];
-                if (is_lower)
-                {
-                    ch = tolower(cipher_text);
-                }
-                else
-                {
-                    ch = cipher_text;
-                }
-            }
-            fputc(ch, fout);
-        }
-        fclose(fin);
-        fclose(fout);
-        printf("Decryption done! Check mono_output.txt");
-    }
-    else if (choice == 3)
-    {
-        printf("\\nyou are exiting....");
-    }
-    else
-    {
-        printf("\\nplease select proper option ");
-    }
-}
-
-
-/* ============================================================
-   PRACTICAL 3 : Playfair Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-int main()
-{
-    char key[100], text[500];
-    char matrix[5][5];
-    int used[26] = {0};
-    int i, j, k = 0;
-    printf("Enter Key: ");
-    scanf("%s", key);
-    used['J' - 'A'] = 1;
-    // Generate Matrix
-    for (i = 0; key[i] != '\\0'; i++)
-    {
-        char ch = toupper(key[i]);
-        if (ch == 'J')
-            ch = 'T';
-        if (ch >= 'A' && ch <= 'Z')
-        {
-        }
-        if (used[ch - 'A'] == 0)
-        {
-        }
-        matrix[k / 5][k % 5] = ch;
-        used[ch - 'A'] = 1;
-        k++;
-    }
-    for (i = 0; i < 26; i++)
-    {
-        if (used[i] == 0)
-        {
-            matrix[k / 5][k % 5] = i + 'A';
-            k++;
-        }
-    }
-    printf("\\nKey Matrix\\n\\n");
-    for (i = 0; i < 5; i++)
-    {
-        for (j = 0; j < 5; j++)
-        {
-            printf("%c", matrix[i][j]);
-        }
-        printf("\\n");
-    }
-    FILE *fp, *fe, *fd;
-    fp = fopen("file1.txt", "r");
-    if (fp == NULL)
-    {
-        printf("File not found");
-        return 0;
-    }
-    fgets(text, 500, fp);
-    fclose(fp);
-    char plain[500];
-    int p = 0;
-    for (i = 0; text[i] != '\\0'; i++)
-    {
-        if (isalpha(text[i]))
-        {
-            plain[p] = toupper(text[i]);
-            if (plain[p] == 'J')
-                plain[p] = 'T';
-            p++;
-        }
-    }
-    plain[p] = '\\0';
-    char final[500];
-    int f = 0;
-    for (i = 0; i < p; i++)
-    {
-        final[f++] = plain[i];
-        if (i < p - 1 && plain[i] == plain[i + 1])
-            final[f++] = 'X';
-    }
-    if (f % 2 != 0)
-        final[f++] = 'X';
-    final[f] = '\\0';
-    printf("\\nPlain Text: %s\\n", final);
-    // Encryption
-    fe = fopen("file2.txt", "w");
-    char cipher[500];
-    int c = 0;
-    for (i = 0; i < f; i += 2)
-    {
-        char a = final[i];
-        char b = final[i + 1];
-        int r1, c1, r2, c2;
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 5; y++)
-            {
-                if (matrix[x][y] == a)
-                {
-                    r1 = x;
-                    c1 = y;
-                }
-                if (matrix[x][y] == b)
-                {
-                    r2 = x;
-                    c2 = y;
-                }
-            }
-        }
-        if (r1 == r2)
-        {
-            cipher[c++] = matrix[r1][(c1 + 1) % 5];
-            cipher[c++] = matrix[r2][(c2 + 1) % 5];
-        }
-        else if (c1 == c2)
-        {
-            cipher[c++] = matrix[(r1 + 1) % 5][c1];
-            cipher[c++] = matrix[(r2 + 1) % 5][c2];
-        }
-        else
-        {
-            cipher[c++] = matrix[r1][c2];
-            cipher[c++] = matrix[r2][c1];
-        }
-    }
-    cipher[c] = '\\0';
-    fprintf(fe, "%s", cipher);
-    fclose(fe);
-    printf("Cipher Text: %s\\n", cipher);
-    // Decryption
-    fe = fopen("file2.txt", "r");
-    if (fe == NULL)
-    {
-        printf("Encrypted file not found");
-        return 0;
-    }
-    fgets(cipher, 500, fe);
-    fclose(fe);
-    c = strlen(cipher);
-    fd = fopen("decrypted.txt", "w");
-    char decrypt[500];
-    int d = 0;
-    for (i = 0; i < c; i += 2)
-    {
-        char a = cipher[i];
-        char b = cipher[i + 1];
-        int r1, c1, r2, c2;
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 5; y++)
-            {
-                if (matrix[x][y] == a)
-                {
-                    r1 = x;
-                    c1 = y;
-                }
-                if (matrix[x][y] == b)
-                {
-                    r2 = x;
-                    c2 = y;
-                }
-            }
-        }
-        if (r1 == r2)
-        {
-            decrypt[d++] = matrix[r1][(c1 + 4) % 5];
-            decrypt[d++] = matrix[r2][(c2 + 4) % 5];
-        }
-        else if (c1 == c2)
-        {
-            decrypt[d++] = matrix[(r1 + 4) % 5][c1];
-            decrypt[d++] = matrix[(r2 + 4) % 5][c2];
-        }
-        else
-        {
-            decrypt[d++] = matrix[r1][c2];
-            decrypt[d++] = matrix[r2][c1];
-        }
-    }
-    decrypt[d] = '\\0';
-    fprintf(fd, "%s", decrypt);
-    fclose(fd);
-    printf("Decrypted Text: %s\\n", decrypt);
-    return 0;
-}
-
-
-/* ============================================================
-   PRACTICAL 4 : Hill Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-int main()
-{
-    int choice;
-    char cleanText[2000], resultText[2000];
-    int matrix[10][10], invMatrix[10][10];
-    int n, i, j, k, cleanLen = 0, ch;
-    printf("=== HILL CIPHER PROGRAM (NO FUNCTIONS) ===\\n");
-    printf("1. Encrypt\\n");
-    printf("2. Decrypt\\n");
-    printf("Select an option (1 or 2): ");
-    if (scanf("%d", &choice) != 1 || (choice != 1 && choice != 2))
-    {
-        printf("Invalid choice! Program exiting.\\n");
-        return 1;
-    }
-    FILE *fp = fopen("hillinput.txt", "r");
-    if (fp == NULL)
-    {
-        printf("\\n[ERROR] File 'hillinput.txt' not found!\\n");
-        return 1;
-    }
-    while ((ch = fgetc(fp)) != EOF && cleanLen < 1990)
-    {
-        if (isalpha(ch))
-        {
-            cleanText[cleanLen++] = toupper((unsigned char)ch);
-        }
-    }
-    fclose(fp);
-    cleanText[cleanLen] = '\\0';
-    if (cleanLen == 0)
-    {
-        printf("\\n[ERROR] 'hillinput.txt' contains no valid alphabetic letters!\\n");
-        return 1;
-    }
-    printf("\\nCleaned Input Text: %s\\n", cleanText);
-    printf("Enter matrix size N (2 or 3): ");
-    if (scanf("%d", &n) != 1 || (n != 2 && n != 3))
-    {
-        printf("[ERROR] This single-main version supports N=2 or N=3.\\n");
-        return 1;
-    }
-    printf("\\nEnter %dx%d Key Matrix elements row by row:\\n", n, n);
-    for (i = 0; i < n; i++)
-    {
-        printf("Row %d values (%d numbers): ", i + 1, n);
-        for (j = 0; j < n; j++)
-        {
-            scanf("%d", &matrix[i][j]);
-            matrix[i][j] = (matrix[i][j] % 26 + 26) % 26;
-        }
-    }
-    while (cleanLen % n != 0)
-    {
-        cleanText[cleanLen++] = 'X';
-    }
-    cleanText[cleanLen] = '\\0';
-    printf("Padded Text for Processing: %s\\n", cleanText);
-    if (choice == 1)
-    {
-        int resIdx = 0;
-        for (i = 0; i < cleanLen; i += n)
-        {
-            for (j = 0; j < n; j++)
-            {
-                int sum = 0;
-                for (k = 0; k < n; k++)
-                {
-                    int val = cleanText[i + k] - 'A';
-                    sum += matrix[j][k] * val;
-                }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
-            }
-        }
-        resultText[resIdx] = '\\0';
-        FILE *outFp = fopen("output.txt", "w");
-        if (outFp != NULL)
-        {
-            fputs(resultText, outFp);
-            fclose(outFp);
-        }
-        printf("\\n-------------------------\\n");
-        printf("Encryption Successful!\\n");
-        printf("Generated Ciphertext: %s\\n", resultText);
-        printf("Result saved to 'output.txt'\\n");
-        printf("-------------------------\\n");
-    }
-    else if (choice == 2)
-    {
-        int det = 0;
-        if (n == 2)
-        {
-            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
-        else if (n == 3)
-        {
-            det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
-                  matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
-                  matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
-        }
-        det = (det % 26 + 26) % 26;
-        int detInv = -1;
-        for (int x = 1; x < 26; x++)
-        {
-            if ((det * x) % 26 == 1)
-            {
-                detInv = x;
-                break;
-            }
-        }
-        if (detInv == -1)
-        {
-            printf("\\n[ERROR] Key matrix is not invertible modulo 26!\\n");
-            return 1;
-        }
-        for (i = 0; i < n; i++)
-        {
-            for (j = 0; j < n; j++)
-            {
-                int subDet = 0;
-                if (n == 2)
-                {
-                    int r = (i == 0) ? 1 : 0;
-                    int c = (j == 0) ? 1 : 0;
-                    subDet = matrix[r][c];
-                }
-                else if (n == 3)
-                {
-                    int sub[2][2];
-                    int r_idx = 0;
-                    for (int row = 0; row < 3; row++)
-                    {
-                        if (row == i) continue;
-                        int c_idx = 0;
-                        for (int col = 0; col < 3; col++)
-                        {
-                            if (col == j) continue;
-                            sub[r_idx][c_idx++] = matrix[row][col];
-                        }
-                        r_idx++;
-                    }
-                    subDet = sub[0][0] * sub[1][1] - sub[0][1] * sub[1][0];
-                }
-                int sign = ((i + j) % 2 == 0) ? 1 : -1;
-                int cofactor = sign * subDet;
-                cofactor = (cofactor % 26 + 26) % 26;
-                invMatrix[j][i] = (cofactor * detInv) % 26;
-            }
-        }
-        printf("\\nCalculated Inverse Key Matrix (mod 26):\\n");
-        for (i = 0; i < n; i++)
-        {
-            for (j = 0; j < n; j++)
-            {
-                printf("%2d ", invMatrix[i][j]);
-            }
-            printf("\\n");
-        }
-        int resIdx = 0;
-        for (i = 0; i < cleanLen; i += n)
-        {
-            for (j = 0; j < n; j++)
-            {
-                int sum = 0;
-                for (k = 0; k < n; k++)
-                {
-                    int val = cleanText[i + k] - 'A';
-                    sum += invMatrix[j][k] * val;
-                }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
-            }
-        }
-        resultText[resIdx] = '\\0';
-        FILE *outFp = fopen("output.txt", "w");
-        if (outFp != NULL)
-        {
-            fputs(resultText, outFp);
-            fclose(outFp);
-        }
-        printf("\\n-------------------------\\n");
-        printf("Decryption Successful!\\n");
-        printf("Generated Plaintext: %s\\n", resultText);
-        printf("Result saved to 'output.txt'\\n");
-        printf("-------------------------\\n");
-    }
-    return 0;
-}
-
-
-/* ============================================================
-   PRACTICAL 5 : Vigenere Cipher (with Autokey option)
-   ============================================================ */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#define MAX_LEN 1000
-int main()
-{
-    char input_text[MAX_LEN] = {0};
-    char initial_key[MAX_LEN] = {0};
-    char adjusted_key[MAX_LEN] = {0};
-    char output_text[MAX_LEN] = {0};
-    int mode_choice, key_choice;
-    int text_len, k_len, i;
-    FILE *fin, *fout;
-    printf("--- Cryptography System ---\\n");
-    printf("1. Encrypt plaintext\\n");
-    printf("2. Decrypt ciphertext\\n");
-    printf("Enter operational choice (1 or 2): ");
-    if (scanf("%d", &mode_choice) != 1) return 1;
-    fin = fopen("input.txt", "r");
-    if (fin == NULL)
-    {
-        printf("Error: Could not open 'input.txt'. Please create it first!\\n");
-        return 1;
-    }
-    fgets(input_text, MAX_LEN, fin);
-    input_text[strcspn(input_text, "\\r\\n")] = 0;
-    fclose(fin);
-    text_len = strlen(input_text);
-    if (text_len == 0)
-    {
-        printf("Error: 'input.txt' is empty.\\n");
-        return 1;
-    }
-    printf("\\nText read from file: %s\\n", input_text);
-    printf("Enter the secret key: ");
-    scanf("%s", initial_key);
-    k_len = strlen(initial_key);
-    printf("\\n--- Keystream Adjustment Menu ---\\n");
-    printf("1. Repeat the key to match length (Vigenere style)\\n");
-    printf("2. Use Autokey style to match length\\n");
-    printf("Enter choice (1 or 2): ");
-    scanf("%d", &key_choice);
-    if (key_choice == 1)
-    {
-        for (i = 0; i < text_len; i++)
-        {
-            adjusted_key[i] = initial_key[i % k_len];
-        }
-        adjusted_key[text_len] = '\\0';
-    }
-    else if (key_choice == 2)
-    {
-        for (i = 0; i < k_len; i++)
-        {
-            adjusted_key[i] = initial_key[i];
-        }
-        if (mode_choice == 1)
-        {
-            for (i = k_len; i < text_len; i++)
-            {
-                adjusted_key[i] = input_text[i - k_len];
-            }
-        }
-        else
-        {
-            for (i = k_len; i < text_len; i++)
-            {
-                adjusted_key[i] = '\\0';
-            }
-        }
-        adjusted_key[text_len] = '\\0';
-    }
-    else
-    {
-        printf("Invalid choice! Exiting program.\\n");
-        return 1;
-    }
-    for (i = 0; i < text_len; i++)
-    {
-        if (isalpha(input_text[i]))
-        {
-            char t_base = isupper(input_text[i]) ? 'A' : 'a';
-            char k_base = isupper(adjusted_key[i]) ? 'A' : 'a';
-            int t_val = input_text[i] - t_base;
-            int k_val = adjusted_key[i] - k_base;
-            if (mode_choice == 1)
-            {
-                output_text[i] = ((t_val + k_val) % 26) + t_base;
-            }
-            else
-            {
-                output_text[i] = ((t_val - k_val + 26) % 26) + t_base;
-                if (key_choice == 2 && (i + k_len < text_len))
-                {
-                    adjusted_key[i + k_len] = output_text[i];
-                }
-            }
-        }
-        else
-        {
-            output_text[i] = input_text[i];
-            if (mode_choice == 2 && key_choice == 2 && (i + k_len < text_len))
-            {
-                adjusted_key[i + k_len] = input_text[i];
-            }
-        }
-    }
-    output_text[text_len] = '\\0';
-    fout = fopen("output.txt", "w");
-    if (fout == NULL)
-    {
-        printf("Error: Could not create 'output.txt'.\\n");
-        return 1;
-    }
-    if (mode_choice == 1)
-    {
-        fprintf(fout, "Ciphertext: %s\\n", output_text);
-    }
-    else
-    {
-        fprintf(fout, "Plaintext: %s\\n", output_text);
-    }
-    fprintf(fout, "Used Keystream: %s\\n", adjusted_key);
-    fclose(fout);
-    printf("\\nOperation successful! Results saved to 'output.txt'.\\n");
-    return 0;
-}
-
-
-/* ============================================================
-   PRACTICAL 6 : Columnar Transposition Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <string.h>
-int main()
-{
-    int choice, i, j, k, rows, n;
-    char text[100], key[20], result[100];
-    char matrix[100][20];
-    FILE *input, *output;
-    printf("--- Columnar Transposition Cipher ---\\n");
-    printf("1. Encrypt plaintext\\n");
-    printf("2. Decrypt ciphertext\\n");
-    printf("Enter operational choice (1 or 2): ");
-    scanf("%d", &choice);
-    printf("Enter the secret key: ");
-    scanf("%s", key);
-    n = strlen(key);
-    input = fopen("input.txt", "r");
-    if (input == NULL)
-    {
-        printf("Input file not found!");
-        return 0;
-    }
-    output = fopen("output.txt", "w");
-    while (fgets(text, sizeof(text), input) != NULL)
-    {
-        text[strcspn(text, "\\n")] = '\\0';
-        if (strlen(text) == 0)
-        {
-            continue;
-        }
-        if (choice == 1)
-        {
-            while (strlen(text) % n != 0)
-            {
-                strcat(text, "X");
-            }
-            rows = strlen(text) / n;
-            k = 0;
-            for (i = 0; i < rows; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    matrix[i][j] = text[k++];
-                }
-            }
-            k = 0;
-            for (j = 0; j < n; j++)
-            {
-                for (i = 0; i < rows; i++)
-                {
-                    result[k++] = matrix[i][j];
-                }
-            }
-            result[k] = '\\0';
-        }
-        else if (choice == 2)
-        {
-            rows = strlen(text) / n;
-            k = 0;
-            for (j = 0; j < n; j++)
-            {
-                for (i = 0; i < rows; i++)
-                {
-                    matrix[i][j] = text[k++];
-                }
-            }
-            k = 0;
-            for (i = 0; i < rows; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    result[k++] = matrix[i][j];
-                }
-            }
-            result[k] = '\\0';
-        }
-        else
-        {
-            printf("Invalid choice!");
-            return 0;
-        }
-        fprintf(output, "%s\\n", result);
-    }
-    fclose(input);
-    fclose(output);
-    printf("\\nOperation successful!\\n");
-    printf("Results saved to output.txt\\n");
-    return 0;
-}
-
-
-/* ============================================================
-   PRACTICAL 7 : Rail Fence Transposition Cipher
-   ============================================================ */
-#include <stdio.h>
-#include <string.h>
-int main()
-{
-    int choice, key, i, j, k, len;
-    char text[100], result[100];
-    char rail[20][100];
-    FILE *input, *output;
-    printf("--- Rail Fence Transposition Cipher ---\\n");
-    printf("1. Encrypt plaintext\\n");
-    printf("2. Decrypt ciphertext\\n");
-    printf("Enter operational choice (1 or 2): ");
-    scanf("%d", &choice);
-    printf("Enter number of rails: ");
-    scanf("%d", &key);
-    input = fopen("input.txt", "r");
-    if (input == NULL)
-    {
-        printf("Input file not found!");
-        return 0;
-    }
-    output = fopen("output.txt", "w");
-    while (fgets(text, sizeof(text), input) != NULL)
-    {
-        text[strcspn(text, "\\n")] = '\\0';
-        if (strlen(text) == 0)
-        {
-            continue;
-        }
-        len = strlen(text);
-        if (choice == 1)
-        {
-            for (i = 0; i < key; i++)
-            {
-                for (j = 0; j < len; j++)
-                {
-                    rail[i][j] = '\\n';
-                }
-            }
-            i = 0;
-            k = 1;
-            for (j = 0; j < len; j++)
-            {
-                rail[i][j] = text[j];
-                if (i == key - 1)
-                {
-                    k = -1;
-                }
-                else if (i == 0)
-                {
-                    k = 1;
-                }
-                i = i + k;
-            }
-            k = 0;
-            for (i = 0; i < key; i++)
-            {
-                for (j = 0; j < len; j++)
-                {
-                    if (rail[i][j] != '\\n')
-                    {
-                        result[k++] = rail[i][j];
-                    }
-                }
-            }
-            result[k] = '\\0';
-        }
-        else if (choice == 2)
-        {
-            for (i = 0; i < key; i++)
-            {
-                for (j = 0; j < len; j++)
-                {
-                    rail[i][j] = '\\n';
-                }
-            }
-            i = 0;
-            k = 1;
-            for (j = 0; j < len; j++)
-            {
-                rail[i][j] = '*';
-                if (i == key - 1)
-                {
-                    k = -1;
-                }
-                else if (i == 0)
-                {
-                    k = 1;
-                }
-                i = i + k;
-            }
-            k = 0;
-            for (i = 0; i < key; i++)
-            {
-                for (j = 0; j < len; j++)
-                {
-                    if (rail[i][j] == '*')
-                    {
-                        rail[i][j] = text[k++];
-                    }
-                }
-            }
-            k = 0;
-            i = 0;
-            j = 1;
-            while (k < len)
-            {
-                result[k++] = rail[i][k - 1];
-                if (i == key - 1)
-                {
-                    j = -1;
-                }
-                else if (i == 0)
-                {
-                    j = 1;
-                }
-                i = i + j;
-            }
-            result[k] = '\\0';
-        }
-        else
-        {
-            printf("Invalid choice!");
-            return 0;
-        }
-        fprintf(output, "%s\\n", result);
-    }
-    fclose(input);
-    fclose(output);
-    printf("\\nOperation successful!\\n");
-    printf("Results saved to output.txt\\n");
-    return 0;
-}
-`;
-
-    const blob = new Blob([fileContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'INS_Practicals_ET24BTCO156_PreyGoti.txt';
-    document.body.appendChild(a);
-    a.click();
+    var codes = document.querySelectorAll('.sub-practical');
+    var txt = 'INS PRACTICALS - Information & Network Security\n';
+    txt += '================================================\n\n';
+    codes.forEach(function(block) {
+        var title = block.querySelector('h3').textContent.trim();
+        var code = block.querySelector('code').textContent.replace(/^\n+/,'').replace(/\n+$/,'');
+        txt += '/* ' + '='.repeat(50) + ' */\n';
+        txt += '/* ' + title + ' */\n';
+        txt += '/* ' + '='.repeat(50) + ' */\n\n';
+        txt += code + '\n\n\n';
+    });
+    var blob = new Blob([txt], {type:'text/plain'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'INS_Practicals.txt';
+    document.body.appendChild(a); a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(a.href);
 });
 </script>
 
