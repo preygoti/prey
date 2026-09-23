@@ -1778,14 +1778,16 @@ function setMode(mode, fromUserClick = true) {
         btnNoFile.classList.remove('active');
         btnWithFile.classList.add('active');
 
-        downloadBtn.href = '/INS_Practicals.txt';
+        downloadBtn.href = '/INS_Practicals_WithFile.txt';
         downloadBtn.setAttribute('download', 'INS_Practicals_WithFile.txt');
         downloadBtnText.textContent = 'Download Practicals .txt (With File Op)';
         badgeMode.textContent = 'Mode: With File Operation';
         badgeMode.style.borderColor = 'rgba(251, 146, 60, 0.4)';
         badgeMode.style.color = '#fb923c';
 
-        if (fromUserClick) triggerAutoDownload('/INS_Practicals.txt', 'INS_Practicals_WithFile.txt');
+        if (fromUserClick) {
+            triggerAutoDownload('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
+        }
     } else {
         viewWithFile.classList.remove('active-view');
         viewNoFile.classList.add('active-view');
@@ -1799,7 +1801,9 @@ function setMode(mode, fromUserClick = true) {
         badgeMode.style.borderColor = 'rgba(34, 211, 238, 0.25)';
         badgeMode.style.color = '#22d3ee';
 
-        if (fromUserClick) triggerAutoDownload('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
+        if (fromUserClick) {
+            triggerAutoDownload('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
+        }
     }
 }
 
@@ -1827,16 +1831,9 @@ function copyCode(btn) {
     });
 }
 
-// Universal Auto-Download Engine
+// Guaranteed Cross-Device Auto-Download
 function triggerAutoDownload(url, filename) {
-    try {
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        setTimeout(() => { try { document.body.removeChild(iframe); } catch(e){} }, 2500);
-    } catch (e) {}
-
+    // Direct Anchor Click (Most reliable under user gesture)
     try {
         const a = document.createElement('a');
         a.href = url;
@@ -1844,7 +1841,20 @@ function triggerAutoDownload(url, filename) {
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
-        setTimeout(() => { try { document.body.removeChild(a); } catch(e){} }, 1000);
+        setTimeout(() => {
+            try { document.body.removeChild(a); } catch (e) {}
+        }, 1000);
+    } catch (e) {}
+
+    // Hidden Iframe Background Stream
+    try {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        setTimeout(() => {
+            try { document.body.removeChild(iframe); } catch (e) {}
+        }, 3000);
     } catch (e) {}
 }
 
