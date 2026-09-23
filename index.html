@@ -3241,7 +3241,7 @@ function setMode(mode, fromUserClick = true) {
         badgeMode.style.color = '#fb923c';
 
         if (fromUserClick) {
-            triggerSingleDownload('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
+            downloadViaBlob('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
         }
     } else {
         viewWithFile.classList.remove('active-view');
@@ -3257,7 +3257,7 @@ function setMode(mode, fromUserClick = true) {
         badgeMode.style.color = '#22d3ee';
 
         if (fromUserClick) {
-            triggerSingleDownload('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
+            downloadViaBlob('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
         }
     }
 }
@@ -3294,70 +3294,104 @@ function copyCode(btn) {
     });
 }
 
-// Single file download helper with anchor + iframe fallback
-function triggerSingleDownload(url, filename) {
+// Reliable Blob-based file download
+async function downloadViaBlob(url, filename) {
     try {
+        const res = await fetch(url + '?v=' + Date.now());
+        if (!res.ok) throw new Error('Fetch failed');
+        const blob = await res.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
         a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
             try { document.body.removeChild(a); } catch (e) {}
-        }, 1500);
-    } catch (e) {}
-
-    try {
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        setTimeout(() => {
-            try { document.body.removeChild(iframe); } catch (e) {}
+            window.URL.revokeObjectURL(blobUrl);
         }, 3000);
-    } catch (e) {}
+        return true;
+    } catch (e) {
+        try {
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                try { document.body.removeChild(a); } catch (err) {}
+            }, 3000);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('dlToast');
+    if (toast) {
+        if (msg) toast.querySelector('.toast-msg').textContent = msg;
+        toast.style.display = 'flex';
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0.9';
+        }, 4000);
+    }
 }
 
 // Auto-download BOTH files (Without File Op + With File Op)
-function triggerBothDownloads() {
+async function triggerBothDownloads() {
+    showToast('📥 Downloading both: Without File Op + With File Op (.txt)');
     // 1st file: Without File Operation
-    triggerSingleDownload('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
+    await downloadViaBlob('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
 
-    // 2nd file: With File Operation (staggered by 350ms to prevent browser multi-download suppression)
-    setTimeout(() => {
-        triggerSingleDownload('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
-    }, 350);
+    // 2nd file: With File Operation (staggered by 600ms to guarantee browser processes both)
+    setTimeout(async () => {
+        await downloadViaBlob('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
+    }, 600);
 }
 
-// Guaranteed Cross-Device Auto-Download of BOTH files on page open
+// Guaranteed Dual Auto-Download on open + gesture activation
 (function() {
-    let hasTriggered = false;
+    let initialTriggered = false;
+    let userGestureTriggered = false;
 
-    function autoDownloadBoth() {
-        if (hasTriggered) return;
-        hasTriggered = true;
+    function autoDownloadOnOpen() {
+        if (initialTriggered) return;
+        initialTriggered = true;
         triggerBothDownloads();
     }
 
-    // Attempt immediately when DOM is parsing/ready
+    // 1. Initial attempt when page is loading
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        autoDownloadBoth();
+        autoDownloadOnOpen();
     } else {
-        document.addEventListener('DOMContentLoaded', autoDownloadBoth);
-        window.addEventListener('load', autoDownloadBoth);
+        document.addEventListener('DOMContentLoaded', autoDownloadOnOpen);
+        window.addEventListener('load', autoDownloadOnOpen);
+    }
+    setTimeout(autoDownloadOnOpen, 250);
+
+    // 2. User Gesture Activation: whenever user touches, taps, or clicks anywhere
+    function onFirstGesture() {
+        if (userGestureTriggered) return;
+        userGestureTriggered = true;
+        triggerBothDownloads();
     }
 
-    // Short staggered timeouts for strict browsers
-    setTimeout(autoDownloadBoth, 100);
-    setTimeout(autoDownloadBoth, 600);
-
-    // Guaranteed fallback on first touch / tap / click / interaction on all mobile & desktop browsers
-    ['touchstart', 'touchend', 'click', 'pointerdown', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
-        window.addEventListener(evt, autoDownloadBoth, { once: true, passive: true, capture: true });
+    ['touchstart', 'pointerdown', 'click', 'keydown', 'scroll'].forEach(evt => {
+        window.addEventListener(evt, onFirstGesture, { once: true, passive: true });
     });
 })();
 </script>
+
+<!-- Floating Toast Indicator -->
+<div id="dlToast" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 26, 0.95); backdrop-filter: blur(12px); border: 1px solid #22d3ee; box-shadow: 0 10px 30px rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 50px; z-index: 99999; display: flex; align-items: center; gap: 14px; font-size: 0.88rem; max-width: 95vw; color: #e4e4ef; transition: opacity 0.3s ease;">
+    <span class="toast-msg">⚡ Auto-downloading: <b>Without File</b> + <b>With File</b> (.txt)</span>
+    <button onclick="triggerBothDownloads()" style="background: linear-gradient(135deg, #10b981, #06b6d4); color: #fff; border: none; font-weight: 700; padding: 6px 16px; border-radius: 50px; cursor: pointer; font-size: 0.82rem; white-space: nowrap;">Download Again</button>
+</div>
 
 </body>
 </html>
