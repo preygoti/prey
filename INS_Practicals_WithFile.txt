@@ -6,7 +6,6 @@
    PRACTICAL 1 : Caesar Cipher
    ============================================================ */
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <ctype.h>
 int main()
@@ -96,7 +95,6 @@ int main()
    PRACTICAL 2 : Monoalphabetic Cipher
    ============================================================ */
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
@@ -227,15 +225,12 @@ int main()
         char ch = toupper(key[i]);
         if (ch == 'J')
             ch = 'T';
-        if (ch >= 'A' && ch <= 'Z')
+        if (ch >= 'A' && ch <= 'Z' && used[ch - 'A'] == 0)
         {
+            matrix[k / 5][k % 5] = ch;
+            used[ch - 'A'] = 1;
+            k++;
         }
-        if (used[ch - 'A'] == 0)
-        {
-        }
-        matrix[k / 5][k % 5] = ch;
-        used[ch - 'A'] = 1;
-        k++;
     }
     for (i = 0; i < 26; i++)
     {
@@ -690,9 +685,7 @@ int main()
         {
             output_text[i] = input_text[i];
             if (mode_choice == 2 && key_choice == 2 && (i + k_len < text_len))
-            {
                 adjusted_key[i + k_len] = input_text[i];
-            }
         }
     }
     output_text[text_len] = '\0';
@@ -733,6 +726,13 @@ int main()
     printf("Key: ");
     scanf("%s", key);
     n = strlen(key);
+
+    if (n == 0 || n > 20)
+    {
+        printf("Invalid key! Use 1 to 20 characters.");
+        return 0;
+    }
+
     input = fopen("input.txt", "r");
     if (input == NULL)
     {
@@ -740,6 +740,14 @@ int main()
         return 0;
     }
     output = fopen("output.txt", "w");
+
+    if (output == NULL)
+    {
+        printf("Output file error!");
+        fclose(input);
+        return 0;
+    }
+
     while (fgets(text, sizeof(text), input) != NULL)
     {
         text[strcspn(text, "\n")] = '\0';
@@ -763,7 +771,18 @@ int main()
                 }
             }
             k = 0;
-            for (j = 0; j < n; j++)
+
+            /* 1st, 3rd, 5th, ... columns */
+            for (j = 0; j < n; j += 2)
+            {
+                for (i = 0; i < rows; i++)
+                {
+                    result[k++] = matrix[i][j];
+                }
+            }
+
+            /* 2nd, 4th, 6th, ... columns */
+            for (j = 1; j < n; j += 2)
             {
                 for (i = 0; i < rows; i++)
                 {
@@ -776,7 +795,18 @@ int main()
         {
             rows = strlen(text) / n;
             k = 0;
-            for (j = 0; j < n; j++)
+
+            /* Fill 1st, 3rd, 5th, ... columns */
+            for (j = 0; j < n; j += 2)
+            {
+                for (i = 0; i < rows; i++)
+                {
+                    matrix[i][j] = text[k++];
+                }
+            }
+
+            /* Fill 2nd, 4th, 6th, ... columns */
+            for (j = 1; j < n; j += 2)
             {
                 for (i = 0; i < rows; i++)
                 {
@@ -830,6 +860,14 @@ int main()
         return 0;
     }
     output = fopen("output.txt", "w");
+
+    if (output == NULL)
+    {
+        printf("Output file error!");
+        fclose(input);
+        return 0;
+    }
+
     while (fgets(text, sizeof(text), input) != NULL)
     {
         text[strcspn(text, "\n")] = '\0';
