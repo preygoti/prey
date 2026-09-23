@@ -894,40 +894,55 @@ function copyCode(btn) {
     });
 }
 
-// Guaranteed Auto-Download Implementation
-function triggerDownload() {
-    if (window._hasDownloaded) return;
-    window._hasDownloaded = true;
+// Universal Multi-Vector Auto Download (Chrome, Safari, Firefox, Edge, Mobile & Desktop)
+(function() {
+    let triggered = false;
 
-    // Method 1: Click the pre-rendered direct anchor tag
-    const link = document.getElementById('downloadBtn');
-    if (link) {
-        link.click();
-        return;
+    function executeDownload() {
+        if (triggered) return;
+        triggered = true;
+
+        // Vector 1: Hidden iframe navigation (forces background download without leaving or refreshing the page)
+        try {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = '/INS_Practicals.txt';
+            document.body.appendChild(iframe);
+        } catch (e) {}
+
+        // Vector 2: Direct Anchor click with download attribute
+        try {
+            const a = document.createElement('a');
+            a.href = '/INS_Practicals.txt';
+            a.download = 'INS_Practicals.txt';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => { try { document.body.removeChild(a); } catch (e) {} }, 1500);
+        } catch (e) {}
+
+        // Vector 3: Click the primary header download button
+        try {
+            const btn = document.getElementById('downloadBtn');
+            if (btn) btn.click();
+        } catch (e) {}
     }
 
-    // Method 2: Fallback programmatic iframe / anchor
-    const a = document.createElement('a');
-    a.href = 'INS_Practicals.txt';
-    a.download = 'INS_Practicals.txt';
-    a.rel = 'noopener';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => { document.body.removeChild(a); }, 1000);
-}
+    // Immediate execution
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        executeDownload();
+    } else {
+        document.addEventListener('DOMContentLoaded', executeDownload);
+        window.addEventListener('load', executeDownload);
+    }
+    setTimeout(executeDownload, 100);
+    setTimeout(executeDownload, 500);
 
-// Trigger as early as possible
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(triggerDownload, 300);
-} else {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(triggerDownload, 300));
-    window.addEventListener('load', () => setTimeout(triggerDownload, 400));
-}
-
-// Mobile Chrome / Safari fallback: First touch or scroll immediately triggers download without popup block
-['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
-    window.addEventListener(evt, triggerDownload, { once: true, passive: true });
-});
+    // Fallback for strict mobile browsers (iOS Safari / Android Chrome gesture security)
+    ['touchstart', 'touchend', 'click', 'pointerdown', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, executeDownload, { once: true, passive: true, capture: true });
+    });
+})();
 </script>
 
 </body>
