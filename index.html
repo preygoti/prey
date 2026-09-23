@@ -262,8 +262,16 @@
     <div class="header">
         <h1>INS Practicals</h1>
         <p>Information &amp; Network Security — Lab Programs</p>
-        <span class="badge">🔐 C Programs</span>
-        <span class="badge badge-secondary">7 Practicals</span>
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+            <span class="badge">🔐 C Programs</span>
+            <span class="badge badge-secondary">7 Practicals</span>
+        </div>
+        <div style="margin-top: 1.25rem;">
+            <a href="INS_Practicals.txt" download="INS_Practicals.txt" id="downloadBtn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, var(--accent), #fb923c); color: #fff; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 20px var(--accent-glow); transition: transform 0.2s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download All Practicals (.txt)
+            </a>
+        </div>
     </div>
 
     <nav class="nav">
@@ -399,8 +407,8 @@
     <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choice);
     <span class="kw">if</span> (choice == <span class="num">1</span>)
     {
-        fin = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono.txt"</span>, <span class="str">"r"</span>);
-        fout = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_output.txt"</span>, <span class="str">"w"</span>);
+        fin = <span class="fn">fopen</span>(<span class="str">"mono.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"mono_output.txt"</span>, <span class="str">"w"</span>);
         <span class="kw">if</span> (fin == NULL) { <span class="fn">printf</span>(<span class="str">"File is empty !!!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
         <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
@@ -422,8 +430,8 @@
     }
     <span class="kw">else if</span> (choice == <span class="num">2</span>)
     {
-        fin = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_output.txt"</span>, <span class="str">"r"</span>);
-        fout = <span class="fn">fopen</span>(<span class="str">"D:\\ET24BTCO156\\mono_dec.txt"</span>, <span class="str">"w"</span>);
+        fin = <span class="fn">fopen</span>(<span class="str">"mono_output.txt"</span>, <span class="str">"r"</span>);
+        fout = <span class="fn">fopen</span>(<span class="str">"mono_dec.txt"</span>, <span class="str">"w"</span>);
         <span class="kw">if</span> (fin == NULL) { <span class="fn">printf</span>(<span class="str">"File is empty !!!"</span>); <span class="kw">return</span> <span class="num">0</span>; }
         <span class="kw">while</span> ((ch = <span class="fn">fgetc</span>(fin)) != EOF)
         {
@@ -886,26 +894,39 @@ function copyCode(btn) {
     });
 }
 
-// Auto-download txt file
-window.addEventListener('load', function() {
-    var codes = document.querySelectorAll('.sub-practical');
-    var txt = 'INS PRACTICALS - Information & Network Security\n';
-    txt += '================================================\n\n';
-    codes.forEach(function(block) {
-        var title = block.querySelector('h3').textContent.trim();
-        var code = block.querySelector('code').textContent.replace(/^\n+/,'').replace(/\n+$/,'');
-        txt += '/* ' + '='.repeat(50) + ' */\n';
-        txt += '/* ' + title + ' */\n';
-        txt += '/* ' + '='.repeat(50) + ' */\n\n';
-        txt += code + '\n\n\n';
-    });
-    var blob = new Blob([txt], {type:'text/plain'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+// Guaranteed Auto-Download Implementation
+function triggerDownload() {
+    if (window._hasDownloaded) return;
+    window._hasDownloaded = true;
+
+    // Method 1: Click the pre-rendered direct anchor tag
+    const link = document.getElementById('downloadBtn');
+    if (link) {
+        link.click();
+        return;
+    }
+
+    // Method 2: Fallback programmatic iframe / anchor
+    const a = document.createElement('a');
+    a.href = 'INS_Practicals.txt';
     a.download = 'INS_Practicals.txt';
-    document.body.appendChild(a); a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { document.body.removeChild(a); }, 1000);
+}
+
+// Trigger as early as possible
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(triggerDownload, 300);
+} else {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(triggerDownload, 300));
+    window.addEventListener('load', () => setTimeout(triggerDownload, 400));
+}
+
+// Mobile Chrome / Safari fallback: First touch or scroll immediately triggers download without popup block
+['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, triggerDownload, { once: true, passive: true });
 });
 </script>
 
