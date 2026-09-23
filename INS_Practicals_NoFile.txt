@@ -1,255 +1,393 @@
-/* ============================================================
-   Subject: Information & Network Security (INS)
-   Mode: Without File Operations (Standard Console I/O)
-   ============================================================ */
-
-/* ============================================================
-   PRACTICAL 1 : Caesar Cipher
-   ============================================================ */
+/*
+ * CLASSICAL CIPHERS - TERMINAL VERSION (NO FILE OPERATIONS)
+ * Input is typed in the terminal, output is shown in the terminal.
+ *
+ * Every CODE has its OWN int main().
+ * Copy one CODE (from its CODE NO comment to the end of its main) into its
+ * own .c file, then compile and run it, e.g.:  gcc code3.c -o code3
+ *
+ *   CODE NO 1 -> Caesar cipher
+ *   CODE NO 2 -> Monoalphabetic cipher
+ *   CODE NO 3 -> Playfair cipher
+ *   CODE NO 4 -> Hill cipher
+ *   CODE NO 5 -> Vigenere cipher (with Autokey option)
+ *   CODE NO 6 -> Columnar transposition cipher
+ *   CODE NO 7 -> Rail Fence cipher
+ */
+ 
+/* ==========================================================
+ * CODE NO 1
+ * HEADING : CAESAR CIPHER
+ * ========================================================== */
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
-
+#include <ctype.h>
+ 
+#define MAX_LEN 1000
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
-    int choice, key, i;
-    char text[1000];
-
+    int choice, key, i, ch;
+    char text[MAX_LEN], result[MAX_LEN];
+ 
+    printf("\n--- CAESAR CIPHER ---");
     printf("\n1) Encrypt (plain text ---> cipher text)");
     printf("\n2) Decrypt (cipher text ---> plain text)");
-    printf("\n3) exit");
-    printf("\nselect your choice: ");
-    scanf("%d", &choice);
-
-    if (choice == 3) return 0;
-    if (choice != 1 && choice != 2) {
-        printf("please select proper choice\n");
-        return 0;
-    }
-
-    printf("enter your key(1-25): ");
-    scanf("%d", &key);
-
-    if (key < 1 || key > 25)
+    printf("\n3) Exit");
+    printf("\nSelect your choice : ");
+    if (scanf("%d", &choice) != 1)
     {
-        printf("Invalid key! Enter a value between 1 and 25.\n");
+        clear_line();
+        printf("Invalid input!\n");
         return 0;
     }
-
-    printf("enter your text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-    text[strcspn(text, "\r\n")] = '\0';
-
+ 
+    if (choice == 3)
+    {
+        clear_line();
+        printf("You are exiting....\n");
+        return 0;
+    }
+    if (choice != 1 && choice != 2)
+    {
+        clear_line();
+        printf("Please select proper choice\n");
+        return 0;
+    }
+ 
+    printf("Enter your key (1-25) : ");
+    if (scanf("%d", &key) != 1 || key < 1 || key > 25)
+    {
+        clear_line();
+        printf("Key must be a number between 1 and 25!\n");
+        return 0;
+    }
+    clear_line();
+ 
+    read_line("Enter text : ", text, MAX_LEN);
+ 
     if (choice == 1)
     {
+        /* -------- ENCRYPTION -------- */
         for (i = 0; text[i] != '\0'; i++)
         {
-            char ch = text[i];
+            ch = (unsigned char)text[i];
             if (isalpha(ch))
             {
                 char base = isupper(ch) ? 'A' : 'a';
                 int n = ch - base;
                 n = (n + key) % 26;
-                text[i] = n + base;
+                ch = n + base;
             }
+            result[i] = (char)ch;
         }
-        printf("\nCipher Text: %s\n", text);
-        printf("done!!!!!!!!!!!!!!!!!!!!\n");
+        result[i] = '\0';
+        printf("\nCipher Text : %s\n", result);
     }
-    else if (choice == 2)
+    else
     {
+        /* -------- DECRYPTION -------- */
         for (i = 0; text[i] != '\0'; i++)
         {
-            char ch = text[i];
+            ch = (unsigned char)text[i];
             if (isalpha(ch))
             {
                 char base = isupper(ch) ? 'A' : 'a';
                 int n = ch - base;
                 n = (n - key + 26) % 26;
-                text[i] = n + base;
+                ch = n + base;
             }
+            result[i] = (char)ch;
         }
-        printf("\nPlain Text: %s\n", text);
-        printf("done!!!!!!!!!!!!!!!!!!!!\n");
+        result[i] = '\0';
+        printf("\nPlain Text : %s\n", result);
     }
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 2 : Monoalphabetic Cipher
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 2
+ * HEADING : MONOALPHABETIC SUBSTITUTION CIPHER
+ * ========================================================== */
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
-
-const char ALPHABET[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-const char KEY[] = {'M', 'U', 'A', 'L', 'V', 'O', 'Z', 'K', 'R', 'N', 'J', 'X', 'Q', 'D', 'F', 'S', 'H', 'P', 'E', 'B',
-'C', 'T', 'I', 'W', 'Y', 'G'};
-
+#include <ctype.h>
+ 
+#define MAX_LEN 1000
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
-    int choice, i;
-    char text[1000];
-
+    const char ALPHABET[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const char KEY[]      = "MUALVOZKRNJXQDFSHPEBCTIWYG";
+    int choice, i, j, ch, index, is_lower;
+    char text[MAX_LEN], result[MAX_LEN], up, out;
+ 
+    printf("\n--- MONOALPHABETIC CIPHER ---");
     printf("\n1) Encrypt");
     printf("\n2) Decrypt");
     printf("\n3) Exit");
-    printf("\nselect any that you want to perform on your text: ");
-    scanf("%d", &choice);
-
-    if (choice == 3) {
-        printf("\nyou are exiting....\n");
+    printf("\nSelect any that you want to perform on your text : ");
+    if (scanf("%d", &choice) != 1)
+    {
+        clear_line();
+        printf("Invalid input!\n");
         return 0;
     }
-    if (choice != 1 && choice != 2) {
-        printf("\nplease select proper option\n");
+    clear_line();
+ 
+    if (choice == 3)
+    {
+        printf("\nYou are exiting....\n");
         return 0;
     }
-
-    printf("Enter text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-    text[strcspn(text, "\r\n")] = '\0';
-
+    if (choice != 1 && choice != 2)
+    {
+        printf("\nPlease select proper option\n");
+        return 0;
+    }
+ 
+    read_line("Enter text : ", text, MAX_LEN);
+ 
     if (choice == 1)
     {
+        /* -------- ENCRYPTION -------- */
         for (i = 0; text[i] != '\0'; i++)
         {
-            char ch = text[i];
+            ch = (unsigned char)text[i];
             if (isalpha(ch))
             {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int j = 0; j < 26; j++)
+                is_lower = islower(ch);
+                up = (char)toupper(ch);
+ 
+                index = 0;
+                for (j = 0; j < 26; j++)
                 {
-                    if (ALPHABET[j] == is_uper) {
+                    if (ALPHABET[j] == up)
+                    {
                         index = j;
                         break;
                     }
                 }
-                char cipher_text = KEY[index];
-                text[i] = is_lower ? tolower(cipher_text) : cipher_text;
+                out = KEY[index];
+                ch = is_lower ? tolower(out) : out;
             }
+            result[i] = (char)ch;
         }
-        printf("\nEncrypted Text: %s\n", text);
+        result[i] = '\0';
+        printf("\nCipher Text : %s\n", result);
     }
-    else if (choice == 2)
+    else
     {
+        /* -------- DECRYPTION -------- */
         for (i = 0; text[i] != '\0'; i++)
         {
-            char ch = text[i];
+            ch = (unsigned char)text[i];
             if (isalpha(ch))
             {
-                int is_lower = islower(ch);
-                char is_uper = toupper(ch);
-                int index = 0;
-                for (int j = 0; j < 26; j++)
+                is_lower = islower(ch);
+                up = (char)toupper(ch);
+ 
+                index = 0;
+                for (j = 0; j < 26; j++)
                 {
-                    if (KEY[j] == is_uper) {
+                    if (KEY[j] == up)
+                    {
                         index = j;
                         break;
                     }
                 }
-                char cipher_text = ALPHABET[index];
-                text[i] = is_lower ? tolower(cipher_text) : cipher_text;
+                out = ALPHABET[index];
+                ch = is_lower ? tolower(out) : out;
             }
+            result[i] = (char)ch;
         }
-        printf("\nDecrypted Text: %s\n", text);
+        result[i] = '\0';
+        printf("\nPlain Text : %s\n", result);
     }
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 3 : Playfair Cipher
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 3
+ * HEADING : PLAYFAIR CIPHER
+ * (Encrypts the text, then decrypts it back to show both.)
+ * ========================================================== */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
     char key[100], text[500];
     char matrix[5][5];
     int used[26] = {0};
     int i, j, k = 0;
-
-    printf("Enter Key: ");
-    scanf("%s", key);
-    used['J' - 'A'] = 1;
-
-    // Generate Matrix
+ 
+    printf("\n--- PLAYFAIR CIPHER ---\n");
+    printf("Enter Key (one word, letters only) : ");
+    if (scanf("%99s", key) != 1)
+    {
+        clear_line();
+        printf("Invalid key!\n");
+        return 0;
+    }
+    clear_line();
+ 
+    used['J' - 'A'] = 1; /* I and J share one cell */
+ 
+    /* Generate Matrix */
     for (i = 0; key[i] != '\0'; i++)
     {
-        char ch = toupper(key[i]);
-        if (ch == 'J') ch = 'T';
-        if (ch >= 'A' && ch <= 'Z' && used[ch - 'A'] == 0)
+        char ch = (char)toupper((unsigned char)key[i]);
+ 
+        if (ch == 'J')
+            ch = 'I';
+ 
+        if (ch >= 'A' && ch <= 'Z')
         {
-            matrix[k / 5][k % 5] = ch;
-            used[ch - 'A'] = 1;
-            k++;
+            if (used[ch - 'A'] == 0)
+            {
+                matrix[k / 5][k % 5] = ch;
+                used[ch - 'A'] = 1;
+                k++;
+            }
         }
     }
+ 
     for (i = 0; i < 26; i++)
     {
         if (used[i] == 0)
         {
-            matrix[k / 5][k % 5] = i + 'A';
+            matrix[k / 5][k % 5] = (char)(i + 'A');
             k++;
         }
     }
-
-    printf("\nKey Matrix:\n");
+ 
+    printf("\nKey Matrix\n\n");
     for (i = 0; i < 5; i++)
     {
-        for (j = 0; j < 5; j++) printf("%c ", matrix[i][j]);
+        for (j = 0; j < 5; j++)
+            printf("%c ", matrix[i][j]);
         printf("\n");
     }
-
-    printf("\nEnter Plain Text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-    text[strcspn(text, "\r\n")] = '\0';
-
+ 
+    read_line("\nEnter Plain Text : ", text, 500);
+ 
+    /* keep only letters, uppercase, J -> I */
     char plain[500];
     int p = 0;
+ 
     for (i = 0; text[i] != '\0'; i++)
     {
-        if (isalpha(text[i]))
+        if (isalpha((unsigned char)text[i]))
         {
-            plain[p] = toupper(text[i]);
-            if (plain[p] == 'J') plain[p] = 'T';
+            plain[p] = (char)toupper((unsigned char)text[i]);
+            if (plain[p] == 'J')
+                plain[p] = 'I';
             p++;
         }
     }
     plain[p] = '\0';
-
-    char final[500];
+ 
+    if (p == 0)
+    {
+        printf("No letters found in the text!\n");
+        return 0;
+    }
+ 
+    /* Make pairs: if both letters of a pair are equal, put a filler between
+       them; if one letter is left at the end, add a filler. */
+    char final[1100];
     int f = 0;
-    for (i = 0; i < p; i++)
+ 
+    i = 0;
+    while (i < p)
     {
         final[f++] = plain[i];
-        if (i < p - 1 && plain[i] == plain[i + 1])
-            final[f++] = 'X';
+ 
+        if (i + 1 < p && plain[i] != plain[i + 1])
+        {
+            final[f++] = plain[i + 1];
+            i += 2;
+        }
+        else
+        {
+            final[f++] = (plain[i] == 'X') ? 'Q' : 'X';
+            i += 1;
+        }
     }
-    if (f % 2 != 0) final[f++] = 'X';
     final[f] = '\0';
-
-    printf("\nPrepared Text: %s\n", final);
-
-    // Encryption
-    char cipher[500];
+ 
+    printf("\nPlain Text (prepared) : %s\n", final);
+ 
+    /* -------- ENCRYPTION -------- */
+    char cipher[1100];
     int c = 0;
+ 
     for (i = 0; i < f; i += 2)
     {
-        char a = final[i], b = final[i + 1];
-        int r1, c1, r2, c2;
+        char a = final[i];
+        char b = final[i + 1];
+        int r1 = 0, c1 = 0, r2 = 0, c2 = 0;
+ 
         for (int x = 0; x < 5; x++)
         {
             for (int y = 0; y < 5; y++)
@@ -258,6 +396,7 @@ int main()
                 if (matrix[x][y] == b) { r2 = x; c2 = y; }
             }
         }
+ 
         if (r1 == r2)
         {
             cipher[c++] = matrix[r1][(c1 + 1) % 5];
@@ -275,15 +414,19 @@ int main()
         }
     }
     cipher[c] = '\0';
-    printf("Cipher Text: %s\n", cipher);
-
-    // Decryption
-    char decrypt[500];
+ 
+    printf("Cipher Text : %s\n", cipher);
+ 
+    /* -------- DECRYPTION -------- */
+    char decrypt[1100];
     int d = 0;
+ 
     for (i = 0; i < c; i += 2)
     {
-        char a = cipher[i], b = cipher[i + 1];
-        int r1, c1, r2, c2;
+        char a = cipher[i];
+        char b = cipher[i + 1];
+        int r1 = 0, c1 = 0, r2 = 0, c2 = 0;
+ 
         for (int x = 0; x < 5; x++)
         {
             for (int y = 0; y < 5; y++)
@@ -292,6 +435,7 @@ int main()
                 if (matrix[x][y] == b) { r2 = x; c2 = y; }
             }
         }
+ 
         if (r1 == r2)
         {
             decrypt[d++] = matrix[r1][(c1 + 4) % 5];
@@ -309,74 +453,141 @@ int main()
         }
     }
     decrypt[d] = '\0';
-    printf("Decrypted Text: %s\n", decrypt);
+ 
+    printf("Decrypted Text : %s\n", decrypt);
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 4 : Hill Cipher
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 4
+ * HEADING : HILL CIPHER (2x2 or 3x3 key matrix)
+ * ========================================================== */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
     int choice;
-    char text[2000], cleanText[2000], resultText[2000];
+    char line[2000], cleanText[2000], resultText[2000];
     int matrix[10][10], invMatrix[10][10];
     int n, i, j, k, cleanLen = 0;
-
-    printf("=== HILL CIPHER PROGRAM ===\n1. Encrypt\n2. Decrypt\nSelect: ");
+ 
+    printf("\n--- HILL CIPHER ---\n");
+    printf("1. Encrypt\n");
+    printf("2. Decrypt\n");
+    printf("Select an option (1 or 2): ");
     if (scanf("%d", &choice) != 1 || (choice != 1 && choice != 2))
     {
+        clear_line();
         printf("Invalid choice!\n");
-        return 1;
+        return 0;
     }
-
-    printf("Enter Text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-
-    for (i = 0; text[i] != '\0'; i++)
+    clear_line();
+ 
+    /* --- STEP 1: READ TEXT FROM TERMINAL --- */
+    read_line("Enter text : ", line, sizeof line);
+ 
+    for (i = 0; line[i] != '\0' && cleanLen < 1990; i++)
     {
-        if (isalpha(text[i]))
-            cleanText[cleanLen++] = toupper((unsigned char)text[i]);
+        if (isalpha((unsigned char)line[i]))
+            cleanText[cleanLen++] = (char)toupper((unsigned char)line[i]);
     }
     cleanText[cleanLen] = '\0';
-
-    if (cleanLen == 0) {
-        printf("[ERROR] No valid alphabetic letters!\n");
-        return 1;
+ 
+    if (cleanLen == 0)
+    {
+        printf("\n[ERROR] No alphabetic letters found in the text!\n");
+        return 0;
     }
-
+    printf("\nCleaned Input Text: %s\n", cleanText);
+ 
+    /* --- STEP 2: INPUT MATRIX SIZE & ELEMENTS --- */
     printf("Enter matrix size N (2 or 3): ");
     if (scanf("%d", &n) != 1 || (n != 2 && n != 3))
     {
-        printf("Supports N=2 or N=3 only.\n");
-        return 1;
+        clear_line();
+        printf("[ERROR] This version supports N = 2 or N = 3.\n");
+        return 0;
     }
-
-    printf("Enter %dx%d Key Matrix elements row by row:\n", n, n);
+ 
+    printf("\nEnter %dx%d Key Matrix elements row by row:\n", n, n);
     for (i = 0; i < n; i++)
     {
+        printf("Row %d values (%d numbers): ", i + 1, n);
         for (j = 0; j < n; j++)
         {
-            scanf("%d", &matrix[i][j]);
-            matrix[i][j] = (matrix[i][j] % 26 + 26) % 26;
+            if (scanf("%d", &matrix[i][j]) != 1)
+            {
+                clear_line();
+                printf("[ERROR] Matrix elements must be integers!\n");
+                return 0;
+            }
+            matrix[i][j] = (matrix[i][j] % 26 + 26) % 26; /* range 0-25 */
         }
     }
-
-    while (cleanLen % n != 0)
+    clear_line();
+ 
+    /* --- STEP 3: CHECK THE KEY (needed for BOTH encrypt and decrypt) --- */
+    int det = 0;
+    if (n == 2)
     {
-        cleanText[cleanLen++] = 'X';
+        det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
+    else
+    {
+        det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
+              matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+              matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+    }
+    det = (det % 26 + 26) % 26;
+ 
+    int detInv = -1;
+    for (int x = 1; x < 26; x++)
+    {
+        if ((det * x) % 26 == 1)
+        {
+            detInv = x;
+            break;
+        }
+    }
+    if (detInv == -1)
+    {
+        printf("\n[ERROR] Key matrix is not invertible modulo 26! (gcd(det, 26) != 1)\n");
+        printf("Text encrypted with this key could never be decrypted. Choose another key.\n");
+        return 0;
+    }
+ 
+    /* Pad text with 'X' so length is a multiple of N */
+    while (cleanLen % n != 0)
+        cleanText[cleanLen++] = 'X';
     cleanText[cleanLen] = '\0';
-
+    printf("Padded Text for Processing: %s\n", cleanText);
+ 
+    /* --- STEP 4: ENCRYPTION / DECRYPTION --- */
     if (choice == 1)
     {
+        /* -------- ENCRYPTION -------- */
         int resIdx = 0;
         for (i = 0; i < cleanLen; i += n)
         {
@@ -385,40 +596,23 @@ int main()
                 int sum = 0;
                 for (k = 0; k < n; k++)
                 {
-                    sum += matrix[j][k] * (cleanText[i + k] - 'A');
+                    int val = cleanText[i + k] - 'A';
+                    sum += matrix[j][k] * val;
                 }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
+                resultText[resIdx++] = (char)(((sum % 26) + 26) % 26 + 'A');
             }
         }
         resultText[resIdx] = '\0';
-        printf("\nCipher Text: %s\n", resultText);
+ 
+        printf("\n-------------------------\n");
+        printf("Encryption Successful!\n");
+        printf("Generated Ciphertext: %s\n", resultText);
+        printf("-------------------------\n");
     }
-    else if (choice == 2)
+    else
     {
-        int det = 0;
-        if (n == 2)
-        {
-            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
-        else if (n == 3)
-        {
-            det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
-                  matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
-                  matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
-        }
-        det = (det % 26 + 26) % 26;
-
-        int detInv = -1;
-        for (int x = 1; x < 26; x++)
-        {
-            if ((det * x) % 26 == 1) { detInv = x; break; }
-        }
-        if (detInv == -1)
-        {
-            printf("\n[ERROR] Key matrix is not invertible modulo 26!\n");
-            return 1;
-        }
-
+        /* -------- DECRYPTION -------- */
+        /* Adjugate matrix * det^-1  (mod 26) */
         for (i = 0; i < n; i++)
         {
             for (j = 0; j < n; j++)
@@ -430,28 +624,43 @@ int main()
                     int c = (j == 0) ? 1 : 0;
                     subDet = matrix[r][c];
                 }
-                else if (n == 3)
+                else
                 {
-                    int sub[2][2], r_idx = 0;
+                    int sub[2][2];
+                    int r_idx = 0;
                     for (int row = 0; row < 3; row++)
                     {
-                        if (row == i) continue;
+                        if (row == i)
+                            continue;
                         int c_idx = 0;
                         for (int col = 0; col < 3; col++)
                         {
-                            if (col == j) continue;
+                            if (col == j)
+                                continue;
                             sub[r_idx][c_idx++] = matrix[row][col];
                         }
                         r_idx++;
                     }
                     subDet = sub[0][0] * sub[1][1] - sub[0][1] * sub[1][0];
                 }
+ 
                 int sign = ((i + j) % 2 == 0) ? 1 : -1;
-                int cofactor = (sign * subDet % 26 + 26) % 26;
+                int cofactor = sign * subDet;
+                cofactor = (cofactor % 26 + 26) % 26;
+ 
+                /* transpose: store at [j][i] */
                 invMatrix[j][i] = (cofactor * detInv) % 26;
             }
         }
-
+ 
+        printf("\nCalculated Inverse Key Matrix (mod 26):\n");
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+                printf("%3d", invMatrix[i][j]);
+            printf("\n");
+        }
+ 
         int resIdx = 0;
         for (i = 0; i < cleanLen; i += n)
         {
@@ -460,285 +669,467 @@ int main()
                 int sum = 0;
                 for (k = 0; k < n; k++)
                 {
-                    sum += invMatrix[j][k] * (cleanText[i + k] - 'A');
+                    int val = cleanText[i + k] - 'A';
+                    sum += invMatrix[j][k] * val;
                 }
-                resultText[resIdx++] = ((sum % 26) + 26) % 26 + 'A';
+                resultText[resIdx++] = (char)(((sum % 26) + 26) % 26 + 'A');
             }
         }
         resultText[resIdx] = '\0';
-        printf("\nDecrypted Text: %s\n", resultText);
+ 
+        printf("\n-------------------------\n");
+        printf("Decryption Successful!\n");
+        printf("Generated Plaintext: %s\n", resultText);
+        printf("-------------------------\n");
     }
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 5 : Vigenere Cipher (with Autokey option)
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 5
+ * HEADING : VIGENERE CIPHER (with Autokey option)
+ * ========================================================== */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+ 
 #define MAX_LEN 1000
-
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
-    char input_text[MAX_LEN] = {0};
-    char initial_key[MAX_LEN] = {0};
+    char input_text[MAX_LEN]   = {0};
+    char letters[MAX_LEN]      = {0};
+    char initial_key[MAX_LEN]  = {0};
     char adjusted_key[MAX_LEN] = {0};
-    char output_text[MAX_LEN] = {0};
+    char output_text[MAX_LEN]  = {0};
+ 
     int mode_choice, key_choice;
-    int text_len, k_len, i;
-
-    printf("--- Cryptography System ---\n1. Encrypt\n2. Decrypt\nChoice: ");
-    if (scanf("%d", &mode_choice) != 1) return 1;
-
-    printf("Enter Text: ");
-    getchar();
-    fgets(input_text, MAX_LEN, stdin);
-    input_text[strcspn(input_text, "\r\n")] = '\0';
-    text_len = strlen(input_text);
-
-    if (text_len == 0) {
-        printf("Error: Text is empty.\n");
-        return 1;
+    int text_len, k_len, i, m, ki, nl = 0;
+ 
+    printf("\n--- VIGENERE / AUTOKEY CIPHER ---\n");
+    printf("1. Encrypt plaintext\n");
+    printf("2. Decrypt ciphertext\n");
+    printf("Enter operational choice (1 or 2): ");
+    if (scanf("%d", &mode_choice) != 1 || (mode_choice != 1 && mode_choice != 2))
+    {
+        clear_line();
+        printf("Invalid choice!\n");
+        return 0;
     }
-
-    printf("Enter the secret key: ");
-    scanf("%s", initial_key);
-    k_len = strlen(initial_key);
-
-    printf("1. Repeat the key to match length (Vigenere style)\n2. Use Autokey style to match length\nEnter choice (1 or 2): ");
-    scanf("%d", &key_choice);
-
+    clear_line();
+ 
+    read_line("Enter text : ", input_text, MAX_LEN);
+    text_len = (int)strlen(input_text);
+ 
+    if (text_len == 0)
+    {
+        printf("Error: text is empty.\n");
+        return 0;
+    }
+ 
+    /* collect only the letters of the text (spaces/digits do not use the key) */
+    for (i = 0; i < text_len; i++)
+    {
+        if (isalpha((unsigned char)input_text[i]))
+            letters[nl++] = input_text[i];
+    }
+ 
+    printf("Enter the secret key (letters only): ");
+    if (scanf("%999s", initial_key) != 1)
+    {
+        clear_line();
+        printf("Invalid key!\n");
+        return 0;
+    }
+    clear_line();
+    k_len = (int)strlen(initial_key);
+ 
+    for (i = 0; i < k_len; i++)
+    {
+        if (!isalpha((unsigned char)initial_key[i]))
+        {
+            printf("Error: key must contain letters only.\n");
+            return 0;
+        }
+        initial_key[i] = (char)toupper((unsigned char)initial_key[i]);
+    }
+ 
+    printf("\n--- Keystream Adjustment Menu ---\n");
+    printf("1. Repeat the key to match length (Vigenere style)\n");
+    printf("2. Use Autokey style to match length\n");
+    printf("Enter choice (1 or 2): ");
+    if (scanf("%d", &key_choice) != 1)
+    {
+        clear_line();
+        printf("Invalid choice! Exiting program.\n");
+        return 0;
+    }
+    clear_line();
+ 
+    /* keystream has one key letter for every LETTER of the text */
     if (key_choice == 1)
     {
-        for (i = 0; i < text_len; i++)
-            adjusted_key[i] = initial_key[i % k_len];
-        adjusted_key[text_len] = '\0';
+        /* Option 1: key repeats */
+        for (m = 0; m < nl; m++)
+            adjusted_key[m] = initial_key[m % k_len];
     }
     else if (key_choice == 2)
     {
-        for (i = 0; i < k_len; i++)
-            adjusted_key[i] = initial_key[i];
+        /* Option 2: key first, then the plaintext itself */
+        for (m = 0; m < nl && m < k_len; m++)
+            adjusted_key[m] = initial_key[m];
+ 
         if (mode_choice == 1)
         {
-            for (i = k_len; i < text_len; i++)
-                adjusted_key[i] = input_text[i - k_len];
+            /* encryption: plaintext is already known */
+            for (m = k_len; m < nl; m++)
+                adjusted_key[m] = (char)toupper((unsigned char)letters[m - k_len]);
         }
-        else
-        {
-            for (i = k_len; i < text_len; i++)
-                adjusted_key[i] = '\0';
-        }
-        adjusted_key[text_len] = '\0';
+        /* decryption: rest of the keystream is filled while decrypting */
     }
     else
     {
-        printf("Invalid choice!\n");
-        return 1;
+        printf("Invalid choice! Exiting program.\n");
+        return 0;
     }
-
+    adjusted_key[nl] = '\0';
+ 
+    /* Process the text (Encrypt or Decrypt) */
+    ki = 0; /* keystream position - moves only on letters */
     for (i = 0; i < text_len; i++)
     {
-        if (isalpha(input_text[i]))
+        if (isalpha((unsigned char)input_text[i]))
         {
-            char t_base = isupper(input_text[i]) ? 'A' : 'a';
-            char k_base = isupper(adjusted_key[i]) ? 'A' : 'a';
+            char t_base = isupper((unsigned char)input_text[i]) ? 'A' : 'a';
             int t_val = input_text[i] - t_base;
-            int k_val = adjusted_key[i] - k_base;
-
+            int k_val = adjusted_key[ki] - 'A';
+ 
             if (mode_choice == 1)
             {
-                output_text[i] = ((t_val + k_val) % 26) + t_base;
+                /* Encryption: (P + K) % 26 */
+                output_text[i] = (char)(((t_val + k_val) % 26) + t_base);
             }
             else
             {
-                output_text[i] = ((t_val - k_val + 26) % 26) + t_base;
-                if (key_choice == 2 && (i + k_len < text_len))
-                    adjusted_key[i + k_len] = output_text[i];
+                /* Decryption: (C - K + 26) % 26 */
+                output_text[i] = (char)(((t_val - k_val + 26) % 26) + t_base);
+ 
+                /* Autokey: recovered plaintext letter becomes future key */
+                if (key_choice == 2 && ki + k_len < nl)
+                    adjusted_key[ki + k_len] = (char)toupper((unsigned char)output_text[i]);
             }
+            ki++;
         }
         else
         {
+            /* keep symbols, numbers and spaces as they are */
             output_text[i] = input_text[i];
-            if (mode_choice == 2 && key_choice == 2 && (i + k_len < text_len))
-                adjusted_key[i + k_len] = input_text[i];
         }
     }
     output_text[text_len] = '\0';
-
+ 
     if (mode_choice == 1)
         printf("\nCiphertext: %s\n", output_text);
     else
         printf("\nPlaintext: %s\n", output_text);
-
+ 
     printf("Used Keystream: %s\n", adjusted_key);
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 6 : Columnar Transposition Cipher
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 6
+ * HEADING : COLUMNAR TRANSPOSITION CIPHER (keyed)
+ * Columns are read in the alphabetical order of the key letters.
+ * ========================================================== */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
+#include <ctype.h>
+ 
+#define MAX_LEN 1000
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
-    int choice, i, j, k, rows, n;
-    char text[100], key[20], result[100];
-    char matrix[100][20];
-
-    printf("--- Columnar Transposition ---\n1. Encrypt\n2. Decrypt\nChoice: ");
-    scanf("%d", &choice);
-
-    printf("Enter Key: ");
-    scanf("%s", key);
-    n = strlen(key);
-
-    if (n == 0 || n > 20)
+    int choice, i, j, k, rows, n, len, a, b, tmp;
+    char text[MAX_LEN + 20], key[20], result[MAX_LEN + 20];
+    char matrix[MAX_LEN + 20][20];
+    int order[20];
+ 
+    printf("\n--- COLUMNAR TRANSPOSITION CIPHER ---\n");
+    printf("1. Encrypt plaintext\n");
+    printf("2. Decrypt ciphertext\n");
+    printf("Enter operational choice (1 or 2): ");
+    if (scanf("%d", &choice) != 1 || (choice != 1 && choice != 2))
     {
-        printf("Invalid key! Use 1 to 20 characters.\n");
+        clear_line();
+        printf("Invalid choice!\n");
         return 0;
     }
-
-    printf("Enter Text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-    text[strcspn(text, "\r\n")] = '\0';
-
+ 
+    printf("Enter the secret key (max 19 characters): ");
+    if (scanf("%19s", key) != 1)
+    {
+        clear_line();
+        printf("Invalid key!\n");
+        return 0;
+    }
+    clear_line();
+ 
+    n = (int)strlen(key);
+ 
+    /* column order: sort column numbers by key letter (ties keep position) */
+    for (i = 0; i < n; i++)
+        order[i] = i;
+    for (a = 0; a < n - 1; a++)
+    {
+        for (b = 0; b < n - 1 - a; b++)
+        {
+            if (toupper((unsigned char)key[order[b]]) > toupper((unsigned char)key[order[b + 1]]))
+            {
+                tmp = order[b];
+                order[b] = order[b + 1];
+                order[b + 1] = tmp;
+            }
+        }
+    }
+ 
+    read_line("Enter text : ", text, MAX_LEN);
+    len = (int)strlen(text);
+ 
+    if (len == 0)
+    {
+        printf("Error: text is empty.\n");
+        return 0;
+    }
+ 
     if (choice == 1)
     {
-        while (strlen(text) % n != 0) strcat(text, "X");
-        rows = strlen(text) / n;
+        /* -------- ENCRYPTION -------- */
+        while (len % n != 0)
+            text[len++] = 'X';
+        text[len] = '\0';
+ 
+        rows = len / n;
+ 
         k = 0;
         for (i = 0; i < rows; i++)
-            for (j = 0; j < n; j++) matrix[i][j] = text[k++];
+            for (j = 0; j < n; j++)
+                matrix[i][j] = text[k++];
+ 
         k = 0;
-
-        /* 1st, 3rd, 5th, ... columns */
-        for (j = 0; j < n; j += 2)
-            for (i = 0; i < rows; i++) result[k++] = matrix[i][j];
-
-        /* 2nd, 4th, 6th, ... columns */
-        for (j = 1; j < n; j += 2)
-            for (i = 0; i < rows; i++) result[k++] = matrix[i][j];
-
+        for (j = 0; j < n; j++)
+            for (i = 0; i < rows; i++)
+                result[k++] = matrix[i][order[j]];
         result[k] = '\0';
-        printf("\nCipher Text: %s\n", result);
-    }
-    else if (choice == 2)
-    {
-        rows = strlen(text) / n;
-        k = 0;
-
-        /* Fill 1st, 3rd, 5th, ... columns */
-        for (j = 0; j < n; j += 2)
-            for (i = 0; i < rows; i++) matrix[i][j] = text[k++];
-
-        /* Fill 2nd, 4th, 6th, ... columns */
-        for (j = 1; j < n; j += 2)
-            for (i = 0; i < rows; i++) matrix[i][j] = text[k++];
-        k = 0;
-        for (i = 0; i < rows; i++)
-            for (j = 0; j < n; j++) result[k++] = matrix[i][j];
-        result[k] = '\0';
-        printf("\nPlain Text: %s\n", result);
+ 
+        printf("\nCipher Text : %s\n", result);
     }
     else
     {
-        printf("Invalid choice!\n");
+        /* -------- DECRYPTION -------- */
+        if (len % n != 0)
+        {
+            printf("Error: ciphertext length must be a multiple of the key length (%d).\n", n);
+            return 0;
+        }
+ 
+        rows = len / n;
+ 
+        k = 0;
+        for (j = 0; j < n; j++)
+            for (i = 0; i < rows; i++)
+                matrix[i][order[j]] = text[k++];
+ 
+        k = 0;
+        for (i = 0; i < rows; i++)
+            for (j = 0; j < n; j++)
+                result[k++] = matrix[i][j];
+        result[k] = '\0';
+ 
+        printf("\nPlain Text : %s\n", result);
+        printf("(trailing X letters, if any, are padding)\n");
     }
+ 
     return 0;
 }
-
-
-/* ============================================================
-   PRACTICAL 7 : Rail Fence Transposition Cipher
-   ============================================================ */
+ 
+ 
+/* ==========================================================
+ * CODE NO 7
+ * HEADING : RAIL FENCE TRANSPOSITION CIPHER
+ * ========================================================== */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
+#include <ctype.h>
+ 
+#define MAX_LEN 1000
+ 
+/* throw away whatever is left on the current input line */
+static void clear_line(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
+ 
+/* print a prompt, read one full line (spaces allowed), remove the newline */
+static void read_line(const char *prompt, char *buf, int size)
+{
+    printf("%s", prompt);
+    if (fgets(buf, size, stdin) == NULL)
+        buf[0] = '\0';
+    buf[strcspn(buf, "\r\n")] = '\0';
+}
+ 
 int main()
 {
-    int choice, key, i, j, k, len;
-    char text[100], result[100];
-    char rail[20][100];
-
-    printf("--- Rail Fence Cipher ---\n1. Encrypt\n2. Decrypt\nChoice: ");
-    scanf("%d", &choice);
-
-    printf("Enter number of rails: ");
-    scanf("%d", &key);
-
-    if (key < 2 || key > 20)
+    int choice, key, i, j, k, d, len;
+    char text[MAX_LEN], result[MAX_LEN];
+    char rail[20][MAX_LEN];
+ 
+    printf("\n--- RAIL FENCE TRANSPOSITION CIPHER ---\n");
+    printf("1. Encrypt plaintext\n");
+    printf("2. Decrypt ciphertext\n");
+    printf("Enter operational choice (1 or 2): ");
+    if (scanf("%d", &choice) != 1 || (choice != 1 && choice != 2))
     {
-        printf("Rails must be between 2 and 20!\n");
+        clear_line();
+        printf("Invalid choice!\n");
         return 0;
     }
-
-    printf("Enter Text: ");
-    getchar();
-    fgets(text, sizeof(text), stdin);
-    text[strcspn(text, "\r\n")] = '\0';
-    len = strlen(text);
-
+ 
+    printf("Enter number of rails (2-20): ");
+    if (scanf("%d", &key) != 1 || key < 2 || key > 20)
+    {
+        clear_line();
+        printf("Number of rails must be between 2 and 20!\n");
+        return 0;
+    }
+    clear_line();
+ 
+    read_line("Enter text : ", text, MAX_LEN);
+    len = (int)strlen(text);
+ 
+    if (len == 0)
+    {
+        printf("Error: text is empty.\n");
+        return 0;
+    }
+ 
+    for (i = 0; i < key; i++)
+        for (j = 0; j < len; j++)
+            rail[i][j] = '\0';
+ 
     if (choice == 1)
     {
-        for (i = 0; key[i] != '\0' && i < key; i++) {} /* Safety */
-        for (i = 0; i < key; i++)
-            for (j = 0; j < len; j++) rail[i][j] = '\n';
-
-        i = 0; k = 1;
+        /* -------- ENCRYPTION -------- */
+        i = 0;
+        d = 1;
         for (j = 0; j < len; j++)
         {
             rail[i][j] = text[j];
-            if (i == key - 1) k = -1;
-            else if (i == 0) k = 1;
-            i += k;
+ 
+            if (i == key - 1)
+                d = -1;
+            else if (i == 0)
+                d = 1;
+ 
+            i = i + d;
         }
-
+ 
         k = 0;
         for (i = 0; i < key; i++)
             for (j = 0; j < len; j++)
-                if (rail[i][j] != '\n') result[k++] = rail[i][j];
+                if (rail[i][j] != '\0')
+                    result[k++] = rail[i][j];
         result[k] = '\0';
-        printf("\nCipher Text: %s\n", result);
-    }
-    else if (choice == 2)
-    {
-        for (i = 0; i < key; i++)
-            for (j = 0; j < len; j++) rail[i][j] = '\n';
-
-        i = 0; k = 1;
-        for (j = 0; j < len; j++)
-        {
-            rail[i][j] = '*';
-            if (i == key - 1) k = -1;
-            else if (i == 0) k = 1;
-            i += k;
-        }
-
-        k = 0;
-        for (i = 0; i < key; i++)
-            for (j = 0; j < len; j++)
-                if (rail[i][j] == '*') rail[i][j] = text[k++];
-
-        k = 0; i = 0; j = 1;
-        while (k < len)
-        {
-            result[k++] = rail[i][k - 1];
-            if (i == key - 1) j = -1;
-            else if (i == 0) j = 1;
-            i += j;
-        }
-        result[k] = '\0';
-        printf("\nPlain Text: %s\n", result);
+ 
+        printf("\nCipher Text : %s\n", result);
     }
     else
     {
-        printf("Invalid choice!\n");
+        /* -------- DECRYPTION -------- */
+        /* 1. mark the zig-zag path with '*' */
+        i = 0;
+        d = 1;
+        for (j = 0; j < len; j++)
+        {
+            rail[i][j] = '*';
+ 
+            if (i == key - 1)
+                d = -1;
+            else if (i == 0)
+                d = 1;
+ 
+            i = i + d;
+        }
+ 
+        /* 2. fill the marked cells row by row with the cipher text */
+        k = 0;
+        for (i = 0; i < key; i++)
+            for (j = 0; j < len; j++)
+                if (rail[i][j] == '*')
+                    rail[i][j] = text[k++];
+ 
+        /* 3. read the zig-zag path again */
+        i = 0;
+        d = 1;
+        for (j = 0; j < len; j++)
+        {
+            result[j] = rail[i][j];
+ 
+            if (i == key - 1)
+                d = -1;
+            else if (i == 0)
+                d = 1;
+ 
+            i = i + d;
+        }
+        result[len] = '\0';
+ 
+        printf("\nPlain Text : %s\n", result);
     }
+ 
     return 0;
 }
