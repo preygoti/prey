@@ -351,15 +351,11 @@
             </div>
         </div>
 
-        <!-- Download Action Area -->
-        <div class="download-action" style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-            <a href="javascript:void(0)" onclick="triggerBothDownloads()" class="download-btn-style" style="background: linear-gradient(135deg, #10b981, #06b6d4);">
+        <!-- Download Action -->
+        <div class="download-action" style="display: flex; justify-content: center; align-items: center;">
+            <a href="/INS_Practicals_NoFile.txt" download="INS_Practicals_NoFile.txt" id="downloadBtn" class="download-btn-style" onclick="downloadCurrentPage(event)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span>Download Both (.txt)</span>
-            </a>
-            <a href="/INS_Practicals_NoFile.txt" download="INS_Practicals_NoFile.txt" id="downloadBtn" class="download-btn-style" style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border); box-shadow: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span id="downloadBtnText">Download Active Mode (.txt)</span>
+                <span id="downloadBtnText">Download Practicals .txt (Without File Op)</span>
             </a>
         </div>
     </div>
@@ -3305,14 +3301,10 @@ function setMode(mode, fromUserClick = true) {
 
         downloadBtn.href = '/INS_Practicals_WithFile.txt';
         downloadBtn.setAttribute('download', 'INS_Practicals_WithFile.txt');
-        downloadBtnText.textContent = 'Download With File Op (.txt)';
+        downloadBtnText.textContent = 'Download Practicals .txt (With File Op)';
         badgeMode.textContent = 'Mode: With File Operation';
         badgeMode.style.borderColor = 'rgba(251, 146, 60, 0.4)';
         badgeMode.style.color = '#fb923c';
-
-        if (fromUserClick) {
-            downloadViaBlob('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
-        }
     } else {
         viewWithFile.classList.remove('active-view');
         viewNoFile.classList.add('active-view');
@@ -3321,14 +3313,10 @@ function setMode(mode, fromUserClick = true) {
 
         downloadBtn.href = '/INS_Practicals_NoFile.txt';
         downloadBtn.setAttribute('download', 'INS_Practicals_NoFile.txt');
-        downloadBtnText.textContent = 'Download Without File Op (.txt)';
+        downloadBtnText.textContent = 'Download Practicals .txt (Without File Op)';
         badgeMode.textContent = 'Default: Without File Operation';
         badgeMode.style.borderColor = 'rgba(34, 211, 238, 0.25)';
         badgeMode.style.color = '#22d3ee';
-
-        if (fromUserClick) {
-            downloadViaBlob('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
-        }
     }
 }
 
@@ -3364,7 +3352,7 @@ function copyCode(btn) {
     });
 }
 
-// Reliable Blob-based file download
+// Download file on manual user button click only
 async function downloadViaBlob(url, filename) {
     try {
         const res = await fetch(url + '?v=' + Date.now());
@@ -3381,7 +3369,6 @@ async function downloadViaBlob(url, filename) {
             try { document.body.removeChild(a); } catch (e) {}
             window.URL.revokeObjectURL(blobUrl);
         }, 3000);
-        return true;
     } catch (e) {
         try {
             const a = document.createElement('a');
@@ -3393,75 +3380,20 @@ async function downloadViaBlob(url, filename) {
             setTimeout(() => {
                 try { document.body.removeChild(a); } catch (err) {}
             }, 3000);
-            return true;
-        } catch (err) {
-            return false;
-        }
+        } catch (err) {}
     }
 }
 
-function showToast(msg) {
-    const toast = document.getElementById('dlToast');
-    if (toast) {
-        if (msg) toast.querySelector('.toast-msg').textContent = msg;
-        toast.style.display = 'flex';
-        toast.style.opacity = '1';
-        setTimeout(() => {
-            toast.style.opacity = '0.9';
-        }, 4000);
-    }
-}
-
-// Auto-download BOTH files (Without File Op + With File Op)
-async function triggerBothDownloads() {
-    showToast('📥 Downloading both: Without File Op + With File Op (.txt)');
-    // 1st file: Without File Operation
-    await downloadViaBlob('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
-
-    // 2nd file: With File Operation (staggered by 600ms to guarantee browser processes both)
-    setTimeout(async () => {
-        await downloadViaBlob('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
-    }, 600);
-}
-
-// Guaranteed Dual Auto-Download on open + gesture activation
-(function() {
-    let initialTriggered = false;
-    let userGestureTriggered = false;
-
-    function autoDownloadOnOpen() {
-        if (initialTriggered) return;
-        initialTriggered = true;
-        triggerBothDownloads();
-    }
-
-    // 1. Initial attempt when page is loading
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        autoDownloadOnOpen();
+// Only downloads the currently active page/mode file when user clicks the button
+function downloadCurrentPage(e) {
+    if (e) e.preventDefault();
+    if (currentMode === 'withfile') {
+        downloadViaBlob('/INS_Practicals_WithFile.txt', 'INS_Practicals_WithFile.txt');
     } else {
-        document.addEventListener('DOMContentLoaded', autoDownloadOnOpen);
-        window.addEventListener('load', autoDownloadOnOpen);
+        downloadViaBlob('/INS_Practicals_NoFile.txt', 'INS_Practicals_NoFile.txt');
     }
-    setTimeout(autoDownloadOnOpen, 250);
-
-    // 2. User Gesture Activation: whenever user touches, taps, or clicks anywhere
-    function onFirstGesture() {
-        if (userGestureTriggered) return;
-        userGestureTriggered = true;
-        triggerBothDownloads();
-    }
-
-    ['touchstart', 'pointerdown', 'click', 'keydown', 'scroll'].forEach(evt => {
-        window.addEventListener(evt, onFirstGesture, { once: true, passive: true });
-    });
-})();
+}
 </script>
-
-<!-- Floating Toast Indicator -->
-<div id="dlToast" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 26, 0.95); backdrop-filter: blur(12px); border: 1px solid #22d3ee; box-shadow: 0 10px 30px rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 50px; z-index: 99999; display: flex; align-items: center; gap: 14px; font-size: 0.88rem; max-width: 95vw; color: #e4e4ef; transition: opacity 0.3s ease;">
-    <span class="toast-msg">⚡ Auto-downloading: <b>Without File</b> + <b>With File</b> (.txt)</span>
-    <button onclick="triggerBothDownloads()" style="background: linear-gradient(135deg, #10b981, #06b6d4); color: #fff; border: none; font-weight: 700; padding: 6px 16px; border-radius: 50px; cursor: pointer; font-size: 0.82rem; white-space: nowrap;">Download Again</button>
-</div>
 
 </body>
 </html>
